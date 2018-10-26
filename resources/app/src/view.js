@@ -74,16 +74,16 @@ $('#joinPublicNetwork').on('click', () => {
 	var joinPublicLocalHostPort = document.getElementById("joinPublicLocalHostPort").value;
 
 	command = 'gnome-terminal -x bash -c "' + auxnet_home_path + '/bin/gaux --datadir=' + joinPublicDataDirPath + ' init ' + joinPublicGenesisFile + '; ' + auxnet_home_path + '/bin/gaux --datadir=' + joinPublicDataDirPath + ' --port=' + joinPublicLocalHostPort +  ' --bootnodes=' + joinPublicBootNode + ';"' 
-	alert(command)
-	// myShell.execute(command);
+	// alert(command)
+	myShell.execute(command);
 })
 
 
 $('#joinAttachPublicTerminal').on('click', () => {
 	var joinPublicIpcPath = document.getElementById("joinPublicIpcPath").value;	
 	command = 'gnome-terminal -x ' + auxnet_home_path + '/bin/gaux attach ipc:' + joinPublicIpcPath
-	alert(command)
-	// myShell.execute(command);
+	// alert(command)
+	myShell.execute(command);
 })
 
 
