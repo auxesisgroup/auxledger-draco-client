@@ -8,9 +8,9 @@ $('#auxnetPublicMenu').on('click', () => {
 })
 
 // Set on Load Params
-$('#auxnetDataDirPath').val(process.env.HOME + '/Documents/Auxledger/auxclient/dataDirectory/mainnet');
+$('#auxnetDataDirPath').val(process.env.HOME + '/.auxnet/dataDirectory/mainnet');
 $('#auxnetPortNumber').val('30303');
-$('#auxnetIpcPath').val(process.env.HOME + '/Documents/Auxledger/auxclient/dataDirectory/mainnet/gaux.ipc');
+$('#auxnetIpcPath').val(process.env.HOME + '/.auxnet/dataDirectory/mainnet/gaux.ipc');
 
 $('#joinAuxnetPublic').on('click', () => {
 	var auxnetDataDirPath = document.getElementById("auxnetDataDirPath").value;
@@ -29,10 +29,10 @@ $('#attachAuxnetTerminal').on('click', () => {
 // Public Network - Starts
 
 // Set on Load Params
-$('#publicGenesisFile').val(process.env.HOME + 'Documents/Auxledger/auxclient/auxledger-draco-client/genesis.json');
-$('#publicDataDirPath').val(process.env.HOME + '/Documents/Auxledger/auxclient/dataDirectory/public');
+$('#publicGenesisFile').val(process.env.HOME + '/.auxnet/genesis.json');
+$('#publicDataDirPath').val(process.env.HOME + '/.auxnet/dataDirectory/public');
 $('#publicPortNumber').val('30304');
-$('#publicIpcPath').val(process.env.HOME + '/Documents/Auxledger/auxclient/dataDirectory/public/gaux.ipc');
+$('#publicIpcPath').val(process.env.HOME + '/.auxnet/dataDirectory/public/gaux.ipc');
 
 
 $('#createPublicMenu').on('click', () => {
@@ -59,11 +59,11 @@ $('#joinPublicMenu').on('click', () => {
 })
 
 // on load params
-$('#joinPublicGenesisFile').val(process.env.HOME + 'Documents/Auxledger/auxclient/auxledger-draco-client/genesis.json');
-$('#joinPublicDataDirPath').val(process.env.HOME + '/Documents/Auxledger/auxclient/dataDirectory/public');
+$('#joinPublicGenesisFile').val(process.env.HOME + '/.auxnet/genesis.json');
+$('#joinPublicDataDirPath').val(process.env.HOME + '/.auxnet/dataDirectory/public');
 $('#joinPublicBootNode').val('127.0.0.1:30304');
 $('#joinPublicLocalHostPort').val('30305');
-$('#joinPublicIpcPath').val(process.env.HOME + '/Documents/Auxledger/auxclient/dataDirectory/public/gaux.ipc');
+$('#joinPublicIpcPath').val(process.env.HOME + '/.auxnet/public/gaux.ipc');
 
 
 $('#joinPublicNetwork').on('click', () => {
