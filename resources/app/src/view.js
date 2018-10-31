@@ -1,5 +1,6 @@
 let $ = require('jquery');
 var myShell = require('./my_shell');
+const path = require('path')
 
 auxnetHomePath = process.env.AUXNET
 terminalCommandStart = "gnome-terminal --tab -e \"/bin/bash -c '"
