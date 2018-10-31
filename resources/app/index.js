@@ -5,7 +5,7 @@ const path = require('path')
 let win  
 
 function createWindow() { 
-   win = new BrowserWindow({width: 1000, height: 600}) 
+   win = new BrowserWindow({width: 1000, height: 600, icon:path.join(__dirname,'/src/icons/main.png')}) 
    win.loadURL(url.format ({ 
       pathname: path.join(__dirname, '/src/index.html'), 
       protocol: 'file:', 
@@ -13,4 +13,4 @@ function createWindow() {
    })) 
 }  
 
-app.on('ready', createWindow) 
+app.on('ready', createWindow)

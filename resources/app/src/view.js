@@ -1,6 +1,9 @@
 let $ = require('jquery');
 var myShell = require('./my_shell');
-auxnet_home_path = process.env.AUXNET
+
+auxnetHomePath = process.env.AUXNET
+terminalCommandStart = "gnome-terminal --tab -e \"/bin/bash -c '"
+terminalCommandEnd = "; exec /bin/bash -i'\""
 
 // Auxnet Public - Starts
 $('#auxnetPublicMenu').on('click', () => {
@@ -15,13 +18,13 @@ $('#auxnetIpcPath').val(process.env.HOME + '/.auxnet/dataDirectory/mainnet/gaux.
 $('#joinAuxnetPublic').on('click', () => {
 	var auxnetDataDirPath = document.getElementById("auxnetDataDirPath").value;
 	var auxnetPortNumber = document.getElementById("auxnetPortNumber").value;	
-	command = 'gnome-terminal -x ' + auxnet_home_path + '/bin/gaux --datadir=' + auxnetDataDirPath + ' --port=' + auxnetPortNumber
+	command = terminalCommandStart + auxnetHomePath + '/bin/gaux --datadir=' + auxnetDataDirPath + ' --port=' + auxnetPortNumber + terminalCommandEnd
 	myShell.execute(command);
 })
 
 $('#attachAuxnetTerminal').on('click', () => {
 	var auxnetIpcPath = document.getElementById("auxnetIpcPath").value;	
-	command = 'gnome-terminal -x ' + auxnet_home_path + '/bin/gaux attach ipc:' + auxnetIpcPath
+	command = terminalCommandStart + auxnetHomePath + '/bin/gaux attach ipc:' + auxnetIpcPath + terminalCommandEnd
 	myShell.execute(command);
 })
 // Auxnet Public - Ends
@@ -43,13 +46,13 @@ $('#startPublic').on('click', () => {
 	var publicDataDirPath = document.getElementById("publicDataDirPath").value;
 	var publicGenesisFile = document.getElementById("publicGenesisFile").value;
 	var publicPortNumber = document.getElementById("publicPortNumber").value;
-	command = 'gnome-terminal -x bash -c "' + auxnet_home_path + '/bin/gaux init ' + publicGenesisFile + ' --datadir=' + publicDataDirPath + '; ' + auxnet_home_path + '/bin/gaux --datadir=' + publicDataDirPath + ' --port=' + publicPortNumber + ';"'
+	command = terminalCommandStart + auxnetHomePath + '/bin/gaux init ' + publicGenesisFile + ' --datadir=' + publicDataDirPath + '; ' + auxnetHomePath + '/bin/gaux --datadir=' + publicDataDirPath + ' --port=' + publicPortNumber + terminalCommandEnd
 	myShell.execute(command);
 })
 
 $('#attachPublicTerminal').on('click', () => {
 	var publicIpcPath = document.getElementById("publicIpcPath").value;	
-	command = 'gnome-terminal -x ' + auxnet_home_path + '/bin/gaux attach ipc:' + publicIpcPath
+	command = terminalCommandStart + auxnetHomePath + '/bin/gaux attach ipc:' + publicIpcPath + terminalCommandEnd
 	myShell.execute(command);
 })
 
@@ -72,17 +75,14 @@ $('#joinPublicNetwork').on('click', () => {
 	var joinPublicDataDirPath = document.getElementById("joinPublicDataDirPath").value;
 	var joinPublicBootNode = document.getElementById("joinPublicBootNode").value;
 	var joinPublicLocalHostPort = document.getElementById("joinPublicLocalHostPort").value;
-
-	command = 'gnome-terminal -x bash -c "' + auxnet_home_path + '/bin/gaux --datadir=' + joinPublicDataDirPath + ' init ' + joinPublicGenesisFile + '; ' + auxnet_home_path + '/bin/gaux --datadir=' + joinPublicDataDirPath + ' --port=' + joinPublicLocalHostPort +  ' --bootnodes=' + joinPublicBootNode + ';"' 
-	// alert(command)
+	command = terminalCommandStart + auxnetHomePath + '/bin/gaux --datadir=' + joinPublicDataDirPath + ' init ' + joinPublicGenesisFile + '; ' + auxnetHomePath + '/bin/gaux --datadir=' + joinPublicDataDirPath + ' --port=' + joinPublicLocalHostPort +  ' --bootnodes=' + joinPublicBootNode + terminalCommandEnd
 	myShell.execute(command);
 })
 
 
 $('#joinAttachPublicTerminal').on('click', () => {
 	var joinPublicIpcPath = document.getElementById("joinPublicIpcPath").value;	
-	command = 'gnome-terminal -x ' + auxnet_home_path + '/bin/gaux attach ipc:' + joinPublicIpcPath
-	// alert(command)
+	command = terminalCommandStart + auxnetHomePath + '/bin/gaux attach ipc:' + joinPublicIpcPath + terminalCommandEnd
 	myShell.execute(command);
 })
 
