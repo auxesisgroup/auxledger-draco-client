@@ -1,7 +1,4 @@
 @font-face {
-  font-family: 'Lato_Thin';
-  src: url("../fonts/Lato-Hairline.ttf") format("truetype"); }
-@font-face {
   font-family: 'Lato_Light';
   src: url("../fonts/Lato-Light.ttf") format("truetype"); }
 @font-face {
@@ -48,7 +45,7 @@ a {
   font-family: 'Lato_Regular';
   color: #313131; }
 
-.body_white, .existing_nodes .nw_name {
+.body_white {
   font-size: 14px;
   font-family: 'Lato_Regular';
   color: #F7F7F7; }
@@ -70,11 +67,6 @@ a {
 
 .label_white, .bottom_sub_links .app_version {
   font-family: 'Lato_Light';
-  font-size: 18px;
-  color: #F7F7F7; }
-
-.label_thin_white {
-  font-family: 'Lato_Thin';
   font-size: 18px;
   color: #F7F7F7; }
 
@@ -127,20 +119,9 @@ a {
   position: relative;
   float: right;
   width: 85%;
-  width: calc(100% - 185px);
-  min-height: 85vh;
-  min-height: calc(90vh - 40px);
-  margin-top: 75px;
-  padding: 0px 15px; }
-  .main_wrapper.white {
-    background: #F7F7F7;
-    border-radius: 4px 0 0 4px;
-    box-shadow: 0 8px 15px -4px rgba(0, 0, 0, 0.1);
-    padding: 30px 60px;
-    padding-right: 15px; }
-
-.form-control:focus {
-  box-shadow: none; }
+  width: calc(100% - 200px);
+  height: 500px;
+  padding-top: 90px; }
 
 .sidebar {
   position: fixed;
@@ -180,7 +161,7 @@ a {
       font-family: 'Lato_Bold';
       font-size: 12px;
       margin-top: 25px;
-      margin-bottom: 5px; }
+      margin-bottom: 15px; }
 
 .bottom_sub_links {
   position: absolute;
@@ -212,143 +193,15 @@ a {
 .intro_screen_link {
   position: relative;
   display: flex;
-  width: 230px;
-  min-height: 105px;
+  width: 100%;
+  height: 130px;
   color: #F7F7F7;
-  border-radius: 5px;
+  border-radius: 15px;
   background: rgba(0, 0, 0, 0.3);
   transition: all 0.3s;
   align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  margin-bottom: 25px; }
+  justify-content: center; }
   .intro_screen_link:hover {
     background: rgba(0, 0, 0, 0.5); }
-  .intro_screen_link .plus_icon {
-    width: 25px;
-    margin-bottom: 15px;
-    display: block; }
-  .intro_screen_link.existing_nodes {
-    background-color: #083760;
-    border-radius: 4px;
-    box-shadow: 0 8px 15px -4px rgba(0, 0, 0, 0.1);
-    display: block;
-    padding: 25px 20px;
-    transition: all 0.3s;
-    margin-right: 25px;
-    position: relative; }
-    .intro_screen_link.existing_nodes:hover {
-      background: rgba(8, 55, 96, 0.8); }
 
-.intro_icons_wrap {
-  display: flex;
-  flex-wrap: wrap;
-  margin-bottom: 15px; }
-  .intro_icons_wrap .intro_icon {
-    width: 40px;
-    margin: 0px 15px; }
-
-.intro_right_wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center; }
-  .intro_right_wrap p {
-    width: 70%;
-    margin-bottom: 0px; }
-
-.nodes_wrap {
-  display: flex;
-  flex-wrap: wrap; }
-
-.existing_nodes {
-  position: relative; }
-  .existing_nodes p {
-    margin-bottom: 0px; }
-  .existing_nodes .status_label {
-    font-size: 10px; }
-    .existing_nodes .status_label.active {
-      color: #2DB45F; }
-    .existing_nodes .status_label.standby {
-      color: #F5933B; }
-
-.edit_nodes {
-  position: absolute;
-  right: 10px;
-  bottom: 10px;
-  z-index: 10;
-  width: 10px;
-  display: block;
-  cursor: pointer; }
-
-.cust_form_group {
-  margin-bottom: 30px; }
-  .cust_form_group label {
-    color: #313131;
-    font-size: 10px;
-    font-family: 'Lato_Bold';
-    padding-left: 13px;
-    margin-bottom: 0px;
-    position: relative; }
-  .cust_form_group input {
-    border: none;
-    background: transparent !important;
-    border-radius: 0px !important;
-    border-bottom: solid 2px #313131;
-    padding-top: 0px; }
-  .cust_form_group ::-webkit-input-placeholder {
-    /* Chrome/Opera/Safari */
-    color: #656565;
-    font-family: 'Lato_Bold';
-    font-size: 10px;
-    opacity: 0.35; }
-  .cust_form_group ::-moz-placeholder {
-    /* Firefox 19+ */
-    color: #656565;
-    font-family: 'Lato_Bold';
-    font-size: 10px;
-    opacity: 0.35; }
-  .cust_form_group :-ms-input-placeholder {
-    /* IE 10+ */
-    color: #656565;
-    font-family: 'Lato_Bold';
-    font-size: 10px;
-    opacity: 0.35; }
-  .cust_form_group :-moz-placeholder {
-    /* Firefox 18- */
-    color: #656565;
-    font-family: 'Lato_Bold';
-    font-size: 10px;
-    opacity: 0.35; }
-  .cust_form_group.disabled {
-    opacity: 0.3; }
-
-.cust_btn {
-  background: linear-gradient(to left, #C63232 0%, #F5933B 100%);
-  min-width: 150px;
-  border-radius: 3px;
-  color: #fff;
-  background-size: cover;
-  margin-left: 11px;
-  text-align: center;
-  font-size: 11px;
-  padding: 7px 20px; }
-  .cust_btn.disable_btn {
-    background: linear-gradient(to left, #05172B 0%, #001F3A 35.14%, #174063 100%);
-    opacity: 0.3; }
-
-.error {
-  color: #C63232;
-  font-family: 'Lato_Regular';
-  font-size: 10px;
-  position: relative;
-  top: -8px;
-  left: 3px; }
-
-.auxnet_conneted {
-  color: #2DB45F;
-  font-size: 10px;
-  font-family: 'Lato_Bold';
-  margin-left: 12px; }
-
-/*# sourceMappingURL=main.css.map */
+/*# sourceMappingURL=main.ss.map */

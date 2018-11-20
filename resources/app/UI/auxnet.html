@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
+    <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./assets/css/main.css">
+</head>
+
+<body class="relative">
+    <div class="app_quit_btn">
+        <img src="./assets/img/Power.svg" class="img-fluid" alt="">
+    </div>
+    <div class="sidebar">
+        <a href="./index.html" class="logo_div">
+            <img src="./assets/img/Auxledger_Logo_Light-Lockup-Long.png" width="100%" class="img-fluid" alt="">
+        </a>
+
+        <nav class="side_nav_wrap">
+            <ul class="side_ul">
+                <li class="side_link mb-4">
+                    <a href="./existing-nodes.html">
+                        EXISTING NODES
+                    </a>
+                </li>
+                <li class="category">
+                    Join
+                </li>
+                <li class="side_link active">
+                    <a href="./auxnet.html">
+                        AUXNET
+                    </a>
+                </li>
+                <li class="side_link">
+                    <a href="./join-public-newtork.html">
+                        PUBLIC NETWORK
+                    </a>
+                </li>
+
+                <li class="category">
+                    Create
+                </li>
+                <li class="side_link">
+                    <a href="./create-public-network.html">
+                        PUBLIC NETWORK
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
+
+        <div class="bottom_sub_links">
+            <a href="#" class="bottom_links">Support</a>
+            <a href="#" class="bottom_links">Auxledger Explorer</a>
+            <p class="app_version">
+                Draco Client v 1.0
+            </p>
+        </div>
+    </div>
+
+
+    <div class="main_wrapper white">
+        <section class="main_start_section">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <p class="label_dark">
+                                Join Auxnet Public Network
+                        </p>
+                    </div>
+
+                    <div class="col-10">
+                            <form>
+                                    <div class="form-group cust_form_group">
+                                    <label for="">Data Directory Path <span><img src="./assets/img/Folder_btn.svg" class="img-fluid" alt=""></span></label>
+                                    <input type="text" class="form-control" id="" placeholder="Enter path for Data directory">
+                                    </div>
+                                    <div class="form-group cust_form_group">
+                                    <label for="">Local Port Number</label>
+                                    <input type="text" class="form-control" id="" placeholder="Local port number to host auxnet public Network">
+                                    </div>
+                                    <button type="submit" class="btn cust_btn">Join AUXNET</button>
+                            </form>
+
+                            <p class="auxnet_conneted relative">
+                                    AUXNET Connected <span><img src="./assets/img/check_green.svg" alt=""></span>
+                            </p>
+                    </div>
+                </div>
+
+                <div class="row mt-5">
+                        <div class="col-12">
+                            <p class="label_dark relative mb-1">
+                                    Connect to Terminal <br>
+                                    <small class="error">You need to join AUXNET first</small>
+                            </p>
+                        </div>
+    
+                        <div class="col-10">
+                                <form>
+                                        <div class="form-group cust_form_group">
+                                        <label for="">Gaux IPC Path</label>
+                                        <input type="text" class="form-control" id="" placeholder="Enter path for Gaux IPC" >
+                                        </div>
+                                        <button type="submit" class="btn cust_btn">Attach To Terminal</button>
+                                </form>
+                        </div>
+                    </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <script src="./assets/js/jquery-3.3.1.min.js"></script>
+    <script src="./assets/js/bootstrap.min.js"></script>
+    <script src="./assets/js/uiFunctions.js"></script>
+</body>
+
+</html>

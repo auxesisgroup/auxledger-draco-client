@@ -35,11 +35,26 @@ a{
     position: relative;
     float: right;
     width: 85%;
-    width: calc(100% - 200px);
-    height: 500px;
-    padding-top: 90px;
+    width: calc(100% - 185px);
+    min-height: 85vh;
+    min-height: calc(90vh - 40px);
+    margin-top: 75px;
+    padding: 0px 15px;
+
+    &.white{
+        background: $primary_white;
+        border-radius: 4px 0 0 4px;
+        box-shadow: 0 8px 15px -4px rgba(0,0,0,0.1);
+        padding: 30px 60px;
+        padding-right: 15px;
+    }
+}
+
+.form-control:focus{
+    box-shadow: none;
 }
 
 // components
 @import './_sidebar';
 @import './screens/_intro_page';
+@import './screens/_form_styles';

@@ -68,13 +68,19 @@ a {
 // Labels, Sub Label, Links
 .label_dark {
     font-family: 'Lato_Light';
-    font-size: 17px;
+    font-size: 18px;
     color: $primary_dark;
 }
 
 .label_white {
     font-family: 'Lato_Light';
-    font-size: 17px;
+    font-size: 18px;
+    color: $primary_white;
+}
+
+.label_thin_white {
+    font-family: 'Lato_Thin';
+    font-size: 18px;
     color: $primary_white;
 }
 

@@ -11,7 +11,7 @@ function createWindow() {
       protocol: 'file:', 
       slashes: true 
    }));
-   main_window.setMenu(null);
+   // main_window.setMenu(null);
 }  
 
 app.on('ready', createWindow);
