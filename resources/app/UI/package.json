@@ -9,7 +9,7 @@
   "author": "Auxesis",
   "license": "ISC",
   "dependencies": {
-    "electron": "^3.0.10"
+    "electron": "^3.0.10",
+    "jquery": "^3.3.1"
   }
 }
-
