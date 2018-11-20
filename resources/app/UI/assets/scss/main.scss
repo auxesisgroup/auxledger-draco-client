@@ -1,0 +1,45 @@
+
+// common imports
+@import './_colors';
+@import './_fonts';
+@import './_responsive_mixin';
+@import './_typography';
+
+body{
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    min-height: 100vh;
+    box-sizing: border-box;
+    background: $body_bg_gradient;
+    background-repeat: no-repeat;
+}
+
+*{
+    box-sizing: border-box !important;
+}
+
+a{
+    text-decoration: none;
+
+    &:hover{
+        color: $label_blue;
+    }
+}
+
+.relative{
+    position: relative;
+}
+
+.main_wrapper{
+    position: relative;
+    float: right;
+    width: 85%;
+    width: calc(100% - 200px);
+    height: 500px;
+    padding-top: 90px;
+}
+
+// components
+@import './_sidebar';
+@import './screens/_intro_page';

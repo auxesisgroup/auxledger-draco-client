@@ -1,0 +1,56 @@
+
+// min 300 to max 1200 for navigation
+@mixin width_300_1200() {
+    @media only screen and (min-width: 300px) and (max-width: 1200px){
+        @content;
+    }
+}
+
+// laptop1024
+@mixin min_width_1024() {
+    @media only screen and (min-width: 1024px) {
+        @content;
+    }
+}
+
+@mixin width_1030_1200() {
+    @media only screen and (min-width: 1030px) and (max-width: 1200px){
+        @content;
+    }
+}
+
+// laptop1200
+@mixin min_width_1200() {
+    @media only screen and (min-width: 1200px) {
+        @content;
+    }
+}
+
+// laptop1400
+@mixin min_width_1400() {
+    @media only screen and (min-width: 1400px) {
+        @content;
+    }
+}
+
+// laptop1600
+@mixin min_width_1600() {
+    @media only screen and (min-width: 1600px) {
+        @content;
+    }
+}
+
+// laptop1600
+@mixin min_width_1800() {
+    @media only screen and (min-width: 1800px) {
+        @content;
+    }
+}
+
+
+// laptop1600
+@mixin min_width_2500() {
+    @media only screen and (min-width: 2500px) {
+        @content;
+    }
+}

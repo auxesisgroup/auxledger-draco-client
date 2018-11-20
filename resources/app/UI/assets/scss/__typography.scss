@@ -1,0 +1,109 @@
+a {
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+// Headers, Sub headers
+
+.header_dark {
+    font-family: 'Lato_Black';
+    font-size: 30px;
+    color: $primary_dark;
+}
+
+.header_white {
+    font-family: 'Lato_Black';
+    font-size: 30px;
+    color: $primary_white;
+}
+
+.sub_header_dark {
+    font-family: 'Lato_Light';
+    font-size: 22px;
+    color: $primary_dark;
+}
+
+.sub_header_white {
+    font-family: 'Lato_Light';
+    font-size: 22px;
+    color: $primary_white;
+}
+
+.sub_header_blue {
+    font-family: 'Lato_Light';
+    font-size: 22px;
+    color: $label_blue;
+}
+
+
+// Body
+.body_dark {
+    font-size: 14px;
+    font-family: 'Lato_Regular';
+    color: $primary_dark;
+}
+
+.body_white {
+    font-size: 14px;
+    font-family: 'Lato_Regular';
+    color: $primary_white;
+}
+
+.body_small {
+    font-size: 11px;
+    font-family: 'Lato_Regular';
+    color: $primary_dark;
+}
+
+.body_small_white {
+    font-size: 11px;
+    font-family: 'Lato_Regular';
+    color: $primary_white;
+}
+
+
+// Labels, Sub Label, Links
+.label_dark {
+    font-family: 'Lato_Light';
+    font-size: 17px;
+    color: $primary_dark;
+}
+
+.label_white {
+    font-family: 'Lato_Light';
+    font-size: 17px;
+    color: $primary_white;
+}
+
+.sub_label_dark {
+    font-size: 11px;
+    font-family: 'Lato_Regular';
+    color: $primary_dark;
+}
+
+.sub_label_white {
+    font-size: 11px;
+    font-family: 'Lato_Regular';
+    color: $primary_white;
+}
+
+.link_dark {
+    font-family: 'Lato_Light';
+    font-size: 13px;
+    color: $primary_dark;
+}
+
+.link_white {
+    font-family: 'Lato_Light';
+    font-size: 13px;
+    color: $primary_white;
+}
+
+.bold_label{
+    font-family: 'Lato_Bold';
+    font-size: 14px;
+    color: $primary_white;
+}

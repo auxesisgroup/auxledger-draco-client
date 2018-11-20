@@ -1,0 +1,88 @@
+.sidebar{
+    position: fixed;
+    width: 185px;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    color: $primary_white;
+    // background: red;
+}
+
+.logo_div{
+    width: 140px;
+    display: block;
+    box-sizing: border-box;
+    margin-top: 30px;
+    margin-left: 30px;
+    margin-bottom: 60px;
+}
+
+.side_ul{
+    list-style: none;
+    padding: 0px;
+    a{
+        color: $primary_white;
+        transition: all 0.2s ease;
+
+        &:hover{
+            color: $label_blue;
+        }
+    }
+
+    li{
+        padding-left: 30px;
+        @extend .link_white;
+        height: 30px;
+        display: block;
+        display: flex;
+        align-items: center;
+
+        &.active{
+            font-family: 'Lato_Bold';
+            background-color: #021D37;
+            border-left: solid 4px #E77638;
+        }
+
+        &.category{
+            font-family: 'Lato_Bold';
+            font-size: 12px;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+    }
+}
+
+
+.bottom_sub_links{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding-left: 30px;
+
+    .bottom_links{
+        font-size: 12px;
+        color: rgba(247,247,247,0.56);
+        font-family: 'Lato_Bold';
+        display: block;
+        margin-bottom: 11px;
+    }
+
+    .app_version{
+        @extend .label_white;
+        color: rgba(247,247,247,0.56);
+        margin-top: 10px;
+        margin-bottom: 30px;
+    }
+}
+
+.app_quit_btn{
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    width: 20px;
+    height: 20px;
+    display: block;
+    z-index: 10;
+    cursor: pointer;
+}

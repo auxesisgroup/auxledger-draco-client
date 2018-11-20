@@ -1,0 +1,14 @@
+.intro_screen_link{
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 130px;
+    color: $primary_white;
+    border-radius: 15px;
+    background: rgba($color: #000000, $alpha: 0.3);
+    transition: all 0.3s;
+
+    &:hover{
+        background: rgba($color: #000000, $alpha: 0.5);
+    }
+}
