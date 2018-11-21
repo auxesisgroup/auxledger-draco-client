@@ -13,7 +13,6 @@ $('#appQuit').on('click', () => {
 
 // Auxnet Public - Starts
 
-
 // Set on Load Params
 $('#auxnetDataDirPath').val(process.env.HOME + '/.auxnet/dataDirectory/mainnet');
 $('#auxnetPortNumber').val('30303');
@@ -42,7 +41,7 @@ $('#attachAuxnetTerminal').on('click', () => {
 // Public Network - Starts
 
 // Set on Load Params
-$('#publicGenesisFile').val(process.env.HOME + '/.auxnet/genesis.json');
+// $('#publicGenesisFile').val(process.env.HOME + '/.auxnet/genesis.json');
 $('#publicDataDirPath').val(process.env.HOME + '/.auxnet/dataDirectory/public');
 $('#publicPortNumber').val('30304');
 $('#publicIpcPath').val(process.env.HOME + '/.auxnet/dataDirectory/public/gaux.ipc');
@@ -72,7 +71,7 @@ $('#attachPublicTerminal').on('click', () => {
 
 
 // on load params
-$('#joinPublicGenesisFile').val(process.env.HOME + '/.auxnet/genesis.json');
+// $('#joinPublicGenesisFile').val(process.env.HOME + '/.auxnet/genesis.json');
 $('#joinPublicDataDirPath').val(process.env.HOME + '/.auxnet/dataDirectory/public');
 $('#joinPublicBootNode').val('127.0.0.1:30304');
 $('#joinPublicLocalHostPort').val('30305');

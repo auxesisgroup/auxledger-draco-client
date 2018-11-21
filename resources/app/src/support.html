@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Support</title>
+    <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./assets/css/main.css">
+</head>
+
+<body class="relative">
+    <div class="app_quit_btn" id="appQuit">
+        <img src="./assets/img/Power.svg" class="img-fluid" alt="">
+    </div>
+    <div class="sidebar">
+            <a href="https://auxledger.org/" target="_blank" class="logo_div">
+                <img src="./assets/img/Auxledger_Logo_Light-Lockup-Long.png" width="100%" class="img-fluid" alt="">
+            </a>
+    
+
+        <nav class="side_nav_wrap">
+            <ul class="side_ul">
+                <li class="side_link mb-4">
+                        <a href="./index.html">
+                        DASHBOARD
+                    </a>
+                </li>
+                <li class="category">
+                    Join
+                </li>
+                <li class="side_link">
+                    <a href="./auxnet.html">
+                        AUXNET
+                    </a>
+                </li>
+                <li class="side_link">
+                    <a href="./join-public-newtork.html">
+                        CUSTOM NETWORK
+                    </a>
+                </li>
+
+                <li class="category">
+                    Create
+                </li>
+                <li class="side_link">
+                    <a href="./create-public-network.html">
+                        NEW NETWORK
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
+
+        <div class="bottom_sub_links">
+            <a href="http://wiki.auxledger.org/" target="_blank" class="bottom_links">Wiki</a>
+            <a href="./support.html" class="bottom_links">Support</a>
+            <a href="http://testnet.auxledger.org/" target="_blank" class="bottom_links">Explorer</a>
+            <p class="app_version">
+                Draco Client v 1.0
+            </p>
+        </div>
+    </div>
+
+
+    <div class="main_wrapper white">
+            <section class="main_start_section">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <p class="label_dark">
+                                        Contact Us
+                                </p>
+                            </div>
+        
+                            <div class="col-10">
+                                <form  name="contact_form" id="aux_contact_form">
+                                    <div class="row">
+                                        <div class="form-group cust_form_group col-12">
+                                            <label for="">Name</label>
+                                            <input type="text" class="form-control" id="" placeholder="" required>
+                                        </div>
+                                        <div class="form-group cust_form_group col-md-6">
+                                            <label for="">E-mail ID</label>
+                                            <input type="text" class="form-control" id="" placeholder="">
+                                        </div>
+                                        <div class="form-group cust_form_group col-md-6">
+                                            <label for="">Phone Number</label>
+                                            <input type="text" class="form-control" id="" placeholder="" required>
+                                        </div>
+                                        <div class="form-group cust_form_group col-md-12">
+                                                <label for="">Message</label>
+                                                <input type="text" class="form-control" id="" placeholder="" required>
+                                            </div>
+                                        <div class="form-group d-none cust_form_group col-12 col-md-12">
+                                            <label for="page">Page</label>
+                                            <input name="page" class="form-control" value="Draco Client Support Page">
+                                        </div>
+                                            <div class="col-sm-12">
+                                                <button type="submit" class="btn cust_btn">Submit Query</button>
+                                            </div>
+                                            <div class="col-12 body_dark mb-2 responcemsg"></div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+    </div>
+
+    <div class="clearfix"></div>
+    <script src = "./view.js" ></script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="./assets/js/bootstrap.min.js"></script>
+    <script src="./assets/js/uiFunctions.js"></script>
+
+    <script>
+        // form submit 
+        var origin = window.location.origin;
+        var page_location = window.location.href.replace(origin + '/', '').trim();
+
+         $('#aux_contact_form').submit(function (e) {
+            console.log($(this).serialize());
+            e.preventDefault();
+            $.post('https://wiki.auxledger.org/auxesisgroupcontact.php', $(this).serialize())
+                .done(function (data) {
+                    $('#aux_contact_form')[0].reset();
+                    $('.responcemsg').html(data);
+                })
+                .fail(function () {
+                    $('.responcemsg').html('Some error occurred.Please Submit Form again.');
+                });
+        });
+
+        
+    </script>
+</body>
+
+</html>
