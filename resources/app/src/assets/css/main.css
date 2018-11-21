@@ -221,7 +221,8 @@ a {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  margin-bottom: 25px; }
+  margin-bottom: 25px;
+  margin-right: 25px; }
   .intro_screen_link:hover {
     background: rgba(0, 0, 0, 0.5); }
   .intro_screen_link .plus_icon {
@@ -235,7 +236,6 @@ a {
     display: block;
     padding: 25px 20px;
     transition: all 0.3s;
-    margin-right: 25px;
     position: relative; }
     .intro_screen_link.existing_nodes:hover {
       background: rgba(8, 55, 96, 0.8); }

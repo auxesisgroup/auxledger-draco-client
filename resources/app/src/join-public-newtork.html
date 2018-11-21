@@ -13,15 +13,16 @@
         <img src="./assets/img/Power.svg" class="img-fluid" alt="">
     </div>
     <div class="sidebar">
-        <a href="./index.html" class="logo_div">
-            <img src="./assets/img/Auxledger_Logo_Light-Lockup-Long.png" width="100%" class="img-fluid" alt="">
-        </a>
+            <a href="https://auxledger.org/" target="_blank" class="logo_div">
+                <img src="./assets/img/Auxledger_Logo_Light-Lockup-Long.png" width="100%" class="img-fluid" alt="">
+            </a>
+    
 
         <nav class="side_nav_wrap">
             <ul class="side_ul">
                 <li class="side_link mb-4">
-                    <a href="./existing-nodes.html">
-                        EXISTING NODES
+                    <a href="./index.html">
+                        DASHBOARD
                     </a>
                 </li>
                 <li class="category">
@@ -34,7 +35,7 @@
                 </li>
                 <li class="side_link active">
                     <a href="./join-public-newtork.html">
-                        PUBLIC NETWORK
+                        CUSTOM NETWORK
                     </a>
                 </li>
 
@@ -43,7 +44,7 @@
                 </li>
                 <li class="side_link">
                     <a href="./create-public-network.html">
-                        PUBLIC NETWORK
+                        NEW NETWORK
                     </a>
                 </li>
 
@@ -51,11 +52,12 @@
         </nav>
 
         <div class="bottom_sub_links">
-            <a href="#" class="bottom_links">Support</a>
-            <a href="#" class="bottom_links">Auxledger Explorer</a>
-            <p class="app_version">
-                Draco Client v 1.0
-            </p>
+                <a href="https://wiki.auxledger.org/" class="bottom_links" target="_blank">Wiki</a>
+                <a href="#" class="bottom_links" target="_blank">Support</a>
+                <a href="https://testnet.auxledger.org/#/" class="bottom_links" target="_blank">Auxledger Explorer</a>
+                <p class="app_version">
+                    Draco Client v 1.0
+                </p>
         </div>
     </div>
 
@@ -66,7 +68,7 @@
                 <div class="row">
                     <div class="col-12">
                         <p class="label_dark">
-                            Join Other Public Network
+                            Join Other Custom Network
                         </p>
                     </div>
 
@@ -88,10 +90,10 @@
                                 <label for="">Local Port Number</label>
                                 <input type="text" class="form-control" id="joinPublicLocalHostPort" placeholder="Local port number to host auxnet public Network">
                             </div>
-                            <button type="submit" class="btn cust_btn" id="joinPublicNetwork">Join AUXNET</button>
+                            <button type="submit" class="btn cust_btn" id="joinPublicNetwork">Join NETWORK</button>
 
                         <p class="auxnet_conneted relative" id="greendiv" style="display: none">
-                            Public Network Connected <span><img src="./assets/img/check_green.svg" alt=""></span>
+                            Custom Network Connected <span><img src="./assets/img/check_green.svg" alt=""></span>
                         </p>
                     </div>
                 </div>
@@ -107,7 +109,7 @@
                     <div class="col-10">
                         
                             <div class="form-group cust_form_group disabled" disabled="disabled">
-                                <label for="">Public IPC Path</label>
+                                <label for=""> IPC Path</label>
                                 <input type="text" class="form-control" id="joinPublicIpcPath" disabled placeholder="Enter path for Public IPC">
                             </div>
                             <button type="submit" class="btn cust_btn" id = "joinAttachPublicTerminal" disabled="disabled">Attach To Terminal</button>
