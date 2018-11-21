@@ -6,9 +6,9 @@ let win
 
 function createWindow() { 
 	win = new BrowserWindow({
-		width: 1000,
-		height: 600,
-		icon: path.join(__dirname, '/src/icons/3.png')
+		width: 1280,
+		height: 700,
+		icon: path.join(__dirname, '/src/icons/logo.ico')
 	})
 	win.loadURL(url.format ({ 
 	  pathname: path.join(__dirname, '/src/index.html'), 

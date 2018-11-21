@@ -1,15 +1,18 @@
 let $ = require('jquery');
 var myShell = require('./my_shell');
 const path = require('path')
-
+const remote = require('electron').remote
 auxnetHomePath = process.env.AUXNET
 terminalCommandStart = "gnome-terminal --tab -e \"/bin/bash -c '"
 terminalCommandEnd = "; exec /bin/bash -i'\""
 
-// Auxnet Public - Starts
-$('#auxnetPublicMenu').on('click', () => {
-	location.href = "AuxnetMenu.html";
+//App Quit
+$('#appQuit').on('click', () => {
+	remote.getCurrentWindow().close()
 })
+
+// Auxnet Public - Starts
+
 
 // Set on Load Params
 $('#auxnetDataDirPath').val(process.env.HOME + '/.auxnet/dataDirectory/mainnet');
@@ -17,6 +20,12 @@ $('#auxnetPortNumber').val('30303');
 $('#auxnetIpcPath').val(process.env.HOME + '/.auxnet/dataDirectory/mainnet/gaux.ipc');
 
 $('#joinAuxnetPublic').on('click', () => {
+	$('#joinAuxnetPublic').delay(1500).hide(0);
+	$('#greendiv').delay(1500).show(0);
+	$('#attachDiv').delay(1500).hide(0);
+	$('.cust_form_group, .cust_btn, .form_control').delay(1500).removeAttr("disabled");
+	$('.cust_form_group').delay(1500).removeClass("disabled");
+
 	var auxnetDataDirPath = document.getElementById("auxnetDataDirPath").value;
 	var auxnetPortNumber = document.getElementById("auxnetPortNumber").value;	
 	command = terminalCommandStart + auxnetHomePath + '/bin/gaux --datadir=' + auxnetDataDirPath + ' --port=' + auxnetPortNumber + terminalCommandEnd
@@ -39,11 +48,13 @@ $('#publicPortNumber').val('30304');
 $('#publicIpcPath').val(process.env.HOME + '/.auxnet/dataDirectory/public/gaux.ipc');
 
 
-$('#createPublicMenu').on('click', () => {
-	location.href = "CreatePublicForm.html";
-})
-
 $('#startPublic').on('click', () => {
+	$('#startPublic').delay(1500).hide(0);
+	$('#greendiv').delay(1500).show(0);
+	$('#attachDiv').delay(1500).hide(0);
+	$('.cust_form_group, .cust_btn, .form_control').delay(1500).removeAttr("disabled");
+	$('.cust_form_group').delay(1500).removeClass("disabled");
+
 	var publicDataDirPath = document.getElementById("publicDataDirPath").value;
 	var publicGenesisFile = document.getElementById("publicGenesisFile").value;
 	var publicPortNumber = document.getElementById("publicPortNumber").value;
@@ -58,9 +69,7 @@ $('#attachPublicTerminal').on('click', () => {
 })
 
 
-$('#joinPublicMenu').on('click', () => {
-	location.href = "JoinPublicNetwork.html";
-})
+
 
 // on load params
 $('#joinPublicGenesisFile').val(process.env.HOME + '/.auxnet/genesis.json');
@@ -71,7 +80,12 @@ $('#joinPublicIpcPath').val(process.env.HOME + '/.auxnet/public/gaux.ipc');
 
 
 $('#joinPublicNetwork').on('click', () => {
-	
+	$('#joinPublicNetwork').delay(1500).hide(0);
+	$('#greendiv').delay(1000).show(0);
+	$('#attachDiv').delay(1500).hide(0);
+	$('.cust_form_group, .cust_btn, .form_control').delay(1500).removeAttr("disabled");
+	$('.cust_form_group').delay(1500).removeClass("disabled");
+
 	var joinPublicGenesisFile = document.getElementById("joinPublicGenesisFile").value;
 	var joinPublicDataDirPath = document.getElementById("joinPublicDataDirPath").value;
 	var joinPublicBootNode = document.getElementById("joinPublicBootNode").value;
