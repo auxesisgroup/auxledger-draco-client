@@ -34,7 +34,7 @@
                     </a>
                 </li>
                 <li class="side_link">
-                    <a href="./join-public-newtork.html">
+                    <a href="./join-public-network.html">
                         CUSTOM NETWORK
                     </a>
                 </li>
@@ -52,9 +52,9 @@
         </nav>
 
         <div class="bottom_sub_links">
-                <a href="https://wiki.auxledger.org/" class="bottom_links" target="_blank">Wiki</a>
-                <a href="./support.html" class="bottom_links" >Support</a>
-                <a href="https://testnet.auxledger.org/#/" class="bottom_links" target="_blank">Auxledger Explorer</a>
+                <a href="http://wiki.auxledger.org/" target="_blank" class="bottom_links">Wiki</a>
+                <a href="./support.html" class="bottom_links">Support</a>
+                <a href="http://testnet.auxledger.org/" target="_blank" class="bottom_links">Explorer</a>
                 <p class="app_version">
                     Draco Client v 1.0
                 </p>
@@ -74,16 +74,18 @@
 
                     <div class="col-10">
                         
-                            <div class="form-group cust_form_group">
-                                <label for="">Data Directory Path <span><img src="./assets/img/Folder_btn.svg" class="img-fluid"
-                                            alt=""></span></label>
+                            <div class="form-group cust_form_group" title="Path where you want to store the blockchain data">
+                                <label for="">
+                                    Data Directory Path
+                                    <span><img id="browseAuxnetDataDirPath" src="./assets/img/Folder_btn.svg" class="img-fluid" alt=""></span>                                    
+                                </label>
                                 <input type="text" class="form-control" id="auxnetDataDirPath" placeholder="Enter path for Data directory">
                             </div>
-                            <div class="form-group cust_form_group">
+                            <div class="form-group cust_form_group" title="Local machine port where node will run">
                                 <label for="">Local Port Number</label>
                                 <input type="text" class="form-control" id="auxnetPortNumber" placeholder="Local port number to host auxnet public Network">
                             </div>
-                            <button  class="btn cust_btn" id="joinAuxnetPublic">Join AUXNET</button>
+                            <button  class="btn cust_btn" id="joinAuxnetPublic" title="Click to start auxnet public node">Join AUXNET</button>
                         
 
                         <p class="auxnet_conneted relative" id="greendiv" style="display: none">
@@ -102,11 +104,11 @@
 
                     <div class="col-10">
                         
-                            <div class="form-group cust_form_group disabled" disabled="disabled" >
+                            <div class="form-group cust_form_group disabled" disabled="disabled" title="path of gaux.ipc for corresponding network(present in data directory of the node)">
                                 <label for="">Gaux IPC Path</label>
                                 <input type="text" class="form-control" id="auxnetIpcPath" disabled placeholder="Enter path for Gaux IPC">
                             </div>
-                            <button type="submit" id="attachAuxnetTerminal" class="btn cust_btn" disabled="disabled">Attach To Terminal</button>
+                            <button type="submit" id="attachAuxnetTerminal" class="btn cust_btn" disabled="disabled" title="Click to open workspace for the auxnet network">Open Workspace</button>
                        
                     </div>
                 </div>

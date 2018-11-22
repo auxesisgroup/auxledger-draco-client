@@ -20,7 +20,7 @@
         <nav class="side_nav_wrap">
             <ul class="side_ul">
                 <li class="side_link active mb-4">
-                        <a href="./index.html">
+                    <a href="./index.html">
                         DASHBOARD
                     </a>
                 </li>
@@ -33,7 +33,7 @@
                     </a>
                 </li>
                 <li class="side_link">
-                    <a href="./join-public-newtork.html">
+                    <a href="./join-public-network.html">
                         CUSTOM NETWORK
                     </a>
                 </li>
@@ -70,30 +70,8 @@
                             AUXNET NODES
                         </p>
                     </div>
-                    <div class="intro_screen_link existing_nodes">
-                        <p class="label_thin_white mb-0">Local Port Number</p>
-                        <p class="nw_name">
-                            Network Name
-                        </p>
-                        <p class="status_label active">Active</p>
-
-                        <span class="edit_nodes">
-                            <img src="./assets/img/pencil-edit-button.svg" class="img-fluid" alt="">
-                        </span>
-                    </div>
-                    <div class="intro_screen_link existing_nodes">
-                        <p class="label_thin_white mb-0">Local Port Number</p>
-                        <p class="nw_name">
-                            Network Name
-                        </p>
-                        <p class="status_label active">Active</p>
-                    </div>
-                    <div class="intro_screen_link existing_nodes">
-                        <p class="label_thin_white mb-0">Local Port Number</p>
-                        <p class="nw_name">
-                            Network Name
-                        </p>
-                        <p class="status_label standby">Standby</p>
+                    <!-- Div for Auxnet Public Network -->
+                    <div id='auxnetPublicNetworkList'>
                     </div>
                 </div>
 
@@ -103,34 +81,15 @@
                             PUBLIC NODES
                         </p>
                     </div>
-                    <div class="intro_screen_link existing_nodes">
-                        <p class="label_thin_white mb-0">Local Port Number</p>
-                        <p class="nw_name">
-                            Network Name
-                        </p>
-                        <p class="status_label active">Active</p>
-
-                        <span class="edit_nodes">
-                            <img src="./assets/img/pencil-edit-button.svg" class="img-fluid" alt="">
-                        </span>
-                    </div>
-                    <div class="intro_screen_link existing_nodes">
-                        <p class="label_thin_white mb-0">Local Port Number</p>
-                        <p class="nw_name">
-                            Network Name
-                        </p>
-                        <p class="status_label active">Active</p>
-
-                        <span class="edit_nodes">
-                            <img src="./assets/img/pencil-edit-button.svg" class="img-fluid" alt="">
-                        </span>
+                    <!-- Div for Auxnet Public Network -->
+                    <div id='publicNetworkList' style="display: flex; flex-direction: row;">
                     </div>
                 </div>
             </div>
 
             <div class="container-fluid">
                 <div class="row">
-                    <div class="">
+                    <div class="" title='Click here to join to auxnet public node'>
                         <p class="bold_label pl-4 mb-2">
                             AUXNET NODES
                         </p>
@@ -142,7 +101,7 @@
                         </a>
                     </div>
 
-                    <div class="">
+                    <div class="" title='Click here to create your public node'>
                         <p class="bold_label pl-4 mb-2">
                             PUBLIC NODES
                         </p>
@@ -163,6 +122,7 @@
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="./assets/js/bootstrap.min.js"></script>
     <script src="./assets/js/uiFunctions.js"></script>
 </body>

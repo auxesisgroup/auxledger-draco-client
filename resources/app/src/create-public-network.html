@@ -34,7 +34,7 @@
                     </a>
                 </li>
                 <li class="side_link">
-                    <a href="./join-public-newtork.html">
+                    <a href="./join-public-network.html">
                         CUSTOM NETWORK
                     </a>
                 </li>
@@ -52,9 +52,9 @@
         </nav>
 
         <div class="bottom_sub_links">
-                <a href="https://wiki.auxledger.org/" class="bottom_links" target="_blank">Wiki</a>
-                <a href="./support.html" class="bottom_links" >Support</a>
-                <a href="https://testnet.auxledger.org/#/" class="bottom_links" target="_blank">Auxledger Explorer</a>
+                <a href="http://wiki.auxledger.org/" target="_blank" class="bottom_links">Wiki</a>
+                <a href="./support.html" class="bottom_links">Support</a>
+                <a href="http://testnet.auxledger.org/" target="_blank" class="bottom_links">Explorer</a>
                 <p class="app_version">
                     Draco Client v 1.0
                 </p>
@@ -73,20 +73,24 @@
                     </div>
 
                     <div class="col-10">
-                            <div class="form-group cust_form_group">
+                            <div class="form-group cust_form_group" title="Network Name for Reference(Should be unique and does not contain space)">
+                                <label for="">Name (Should be unique and does not contain space)</label>
+                                <input type="text" class="form-control" id="publicNetworkName" placeholder="Network Name">
+                            </div>
+                            <div class="form-group cust_form_group" title="Path of the Genesis file of the blockchain">
                                 <label for="">Upload Genesis File <span><img src="./assets/img/Folder_btn.svg" class="img-fluid"
                                             alt=""></span></label>
-                                <input type="file" class="form-control" id="publicGenesisFile" >
+                                <input type="text" class="form-control" id="publicGenesisFile" placeholder="Enter path to the GENESIS FILE (JSON file)">
                             </div>
-                            <div class="form-group cust_form_group">
+                            <div class="form-group cust_form_group" title="Path where you want to store the blockchain data">
                                 <label for="">Data directory Path</label>
                                 <input type="text" class="form-control" id="publicDataDirPath" placeholder="Enter path for Data directory">
                             </div>
-                            <div class="form-group cust_form_group">
+                            <div class="form-group cust_form_group" title="Local machine port where node will run">
                                 <label for="">Local Port Number</label>
                                 <input type="text" class="form-control" id="publicPortNumber" placeholder="Assign a Local Port Number to host Public Network">
                             </div>
-                            <button type="submit" class="btn cust_btn" id="startPublic">Create New Network</button>
+                            <button type="submit" class="btn cust_btn" id="startPublic" title="Click to start public node">Create New Network</button>
 
                         <p class="auxnet_conneted relative" id="greendiv" style="display: none">
                             Custom Network Connected <span><img src="./assets/img/check_green.svg" alt=""></span>
@@ -103,11 +107,11 @@
                     </div>
 
                     <div class="col-10">
-                            <div class="form-group cust_form_group disabled" disabled="disabled">
+                            <div class="form-group cust_form_group disabled" disabled="disabled" title="path of gaux.ipc for corresponding network(present in data directory of the node)">
                                 <label for=""> IPC Path</label>
                                 <input type="text" class="form-control" id="publicIpcPath" disabled placeholder="Enter path for Public IPC">
                             </div>
-                            <button type="submit" class="btn cust_btn " id = "attachPublicTerminal" disabled="disabled">Attach To Terminal</button>
+                            <button type="submit" class="btn cust_btn " id = "attachPublicTerminal" disabled="disabled" title="Click to open workspace for your network">Open Workspace</button>
                     </div>
                 </div>
             </div>
