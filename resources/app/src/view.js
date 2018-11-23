@@ -421,12 +421,7 @@ function dashboardOtherPublic(){
 	}
 
 	catch(err) {
-    	htmlDataPublic += '<div class="intro_screen_link existing_nodes">'
-		htmlDataPublic += '<p class="label_thin_white mb-0">'
-		htmlDataPublic += 'No Other Public Network Found'
-		htmlDataPublic += '</p>'
-		htmlDataPublic += '</div>'
-		$('#publicNetworkList').html(htmlDataPublic);
+		
 	}	
 
 }
