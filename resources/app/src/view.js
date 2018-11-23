@@ -11,7 +11,7 @@ var http = require('http');
 auxnetHomePath = process.env.AUXNET
 terminalCommandStart = "gnome-terminal --tab -e \"/bin/bash -c '"
 terminalCommandEnd = "; exec /bin/bash -i'\""
-networkDataDir = '/home/auxesis/.auxnet/data/'
+networkDataDir = '/home/auxesis/.auxnet/nodes/'
 auxnetDirName = 'auxnet/'
 publicDirName = 'my_public/'
 otherPublicDirName = 'other_public/'
@@ -176,26 +176,13 @@ $('#joinAttachPublicTerminal').on('click', () => {
 // $('#testRPC').on('click', () => {
 
 // 	try {
-// 		var rpc = require('node-json-rpc');
-// 		var options = {
-// 		  // int port of rpc server, default 5080 for http or 5433 for https
-// 		  port: 30304,
-// 		  // string domain name or ip of rpc server, default '127.0.0.1'
-// 		  host: 'http://127.0.0.1',
-// 		  // string with default path, default '/'
-// 		  path: '/',
-// 		  // boolean false to turn rpc checks off, default true
-// 		  strict: false
-// 		};
-
-// 		// Create a server object with options
-// 		var client = new rpc.Client(options);
-		
-// 		client.call({"jsonrpc": "2.0", "method": "eth_syncing", "params": [], "id": 0},function (err, res) {
-// 		    if (err) {alert(err); }
-// 		    else { alert(res); }
-// 		  }
-// 		);		
+// 		var Web3 = require('web3');
+// 		web3 = new Web3("http://localhost:8546");
+// 		address = '0x5eb9d9d2df3e4b8de2dda0df1f3dd5e7b316e18e'
+// 		web3.eth.net.isListening((err, result) => {
+// 			if (result) alert('True')
+// 			else alert('False')
+// 		})		
 // 	}
 
 // 	catch(err){
@@ -220,7 +207,8 @@ function saveData(file_path, data) {
 		directory = path.dirname(file_path)
 
 		if (!fs.existsSync(directory)){
-		    fs.mkdirSync(directory);
+			var shell = require('shelljs');
+			shell.mkdir('-p', directory);
 		}
 
 		var json = JSON.stringify(networkData, null, 4);
