@@ -8,7 +8,7 @@ const querystring = require('querystring');
 var http = require('http');
 
 // Global variables
-auxnetHomePath = process.env.AUXNET
+auxnetHomePath = path.dirname(__dirname)
 terminalCommandStart = "gnome-terminal --tab -e \"/bin/bash -c '"
 terminalCommandEnd = "; exec /bin/bash -i'\""
 networkDataDir = process.env.HOME + '/.auxnet/nodes/'
@@ -238,7 +238,7 @@ function dashboardAuxnetPublic(){
 
 			if (err){
 					htmlData += '<div class="intro_screen_link existing_nodes">'
-					htmlData += '<p class="label_thin_white mb-0">'
+					htmlData += '<p class="label_white mb-0">'
 					htmlData += 'No Network Found'
 					htmlData += '</p>'
 					htmlData += '</div>'
@@ -249,18 +249,17 @@ function dashboardAuxnetPublic(){
 
 				var obj = JSON.parse(contents);
 				htmlData += '<div class="intro_screen_link existing_nodes">'
-				htmlData += '<p class="label_thin_white mb-0">'
+				htmlData += '<p class="label_white mb-0">'
 				htmlData += obj['name']
 				htmlData += '</p>'
-				htmlData += '<p class="nw_name">'
+				htmlData += '<p class="nw_name mb-3">'
 				htmlData += obj['localPortNumber']
-				htmlData += '</p>'
+				htmlData += '</p>'				
 				htmlData += '<a title="Click here to Connect to the node" href="./auxnet.html?auxnetDataDirPath=' + obj['dataDir'] + '&auxnetPortNumber=' + obj['localPortNumber'] + '&auxnetIpcPath=' + obj['ipc']  + '&auxnetRPCPortNumber='+ obj['rpcPort'] +'" >'
 				htmlData += 'Connect'
 				htmlData += '</a>'
-				htmlData += '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp'
-				htmlData += '<a href="?deletePath=' + file_path + '" title="Click here to delete network(It will not delete the network data)">'
-				htmlData += 'Delete'
+				htmlData += '<a href="?deletePath=' + file_path + '" title="Click here to delete network(It will not delete the network data)" class="d-block edit_nodes">'
+				htmlData += '<i class="fas fa-trash" style="color: #fff; font-size: 12px;"></i>'
 				htmlData += '</a>'
 				htmlData += '</div>'
 
@@ -275,7 +274,7 @@ function dashboardAuxnetPublic(){
 	catch(err) {
     	alert(err.message);
     	htmlData += '<div class="intro_screen_link existing_nodes">'
-		htmlData += '<p class="label_thin_white mb-0">'
+		htmlData += '<p class="label_white mb-0">'
 		htmlData += 'No Network Found'
 		htmlData += '</p>'
 		htmlData += '</div>'
@@ -306,7 +305,7 @@ function dashboardPublic(){
 			fs.readdir(folder, (err, files) => {
 			  if (files.length == 0 && otherPresent == false){
 			  	htmlDataPublic += '<div class="intro_screen_link existing_nodes">'
-				htmlDataPublic += '<p class="label_thin_white mb-0">'
+				htmlDataPublic += '<p class="label_white mb-0">'
 				htmlDataPublic += 'No Network Found'
 				htmlDataPublic += '</p>'
 				htmlDataPublic += '</div>'
@@ -321,7 +320,7 @@ function dashboardPublic(){
 
 					if (err){
 						htmlDataPublic += '<div class="intro_screen_link existing_nodes">'
-						htmlDataPublic += '<p class="label_thin_white mb-0">'
+						htmlDataPublic += '<p class="label_white mb-0">'
 						htmlDataPublic += 'No Network Found'
 						htmlDataPublic += '</p>'
 						htmlDataPublic += '</div>'
@@ -333,18 +332,17 @@ function dashboardPublic(){
 
 					var obj = JSON.parse(contents);
 					htmlDataPublic += '<div class="intro_screen_link existing_nodes">'
-					htmlDataPublic += '<p class="label_thin_white mb-0">'
+					htmlDataPublic += '<p class="label_white mb-0">'
 					htmlDataPublic += obj['name']
 					htmlDataPublic += '</p>'
-					htmlDataPublic += '<p class="nw_name">'
+					htmlDataPublic += '<p class="nw_name mb-3">'
 					htmlDataPublic += obj['localPortNumber']
 					htmlDataPublic += '</p>'
 					htmlDataPublic += '<a title="Click here to Connect to the node" href="./create-public-network.html?publicGenesisFile=' + obj['genesisFile'] + '&publicDataDirPath=' + obj['dataDir'] + '&publicPortNumber=' + obj['localPortNumber'] + '&publicNetworkName=' + obj['name'] + '&publicIpcPath=' + obj['ipc'] + '&publicRPCPortNumber='+obj['rpcPort']+'">'
 					htmlDataPublic += 'Connect'
 					htmlDataPublic += '</a>'
-					htmlDataPublic += '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp'
-					htmlDataPublic += '<a href="?deletePath=' + file_path + '" title="Click here to delete network(It will not delete the network data)">'
-					htmlDataPublic += 'Delete'
+					htmlDataPublic += '<a href="?deletePath=' + file_path + '" title="Click here to delete network(It will not delete the network data)" class="d-block edit_nodes">'
+					htmlDataPublic += '<i class="fas fa-trash" style="color: #fff; font-size: 12px;"></i>'
 					htmlDataPublic += '</a>'
 					htmlDataPublic += '</div>'
 					$('#publicNetworkList').html(htmlDataPublic);
@@ -358,7 +356,7 @@ function dashboardPublic(){
 
 	catch(err) {
     	htmlDataPublic += '<div class="intro_screen_link existing_nodes">'
-		htmlDataPublic += '<p class="label_thin_white mb-0">'
+		htmlDataPublic += '<p class="label_white mb-0">'
 		htmlDataPublic += 'No Active Nodes'
 		htmlDataPublic += '</p>'
 		htmlDataPublic += '</div>'
@@ -385,7 +383,7 @@ function dashboardOtherPublic(){
 
 					if (err){
 						htmlDataPublic += '<div class="intro_screen_link existing_nodes">'
-						htmlDataPublic += '<p class="label_thin_white mb-0">'
+						htmlDataPublic += '<p class="label_white mb-0">'
 						htmlDataPublic += 'No Other Public Network Found'
 						htmlDataPublic += '</p>'
 						htmlDataPublic += '</div>'
@@ -397,18 +395,17 @@ function dashboardOtherPublic(){
 
 					var obj = JSON.parse(contents);
 					htmlDataPublic += '<div class="intro_screen_link existing_nodes">'
-					htmlDataPublic += '<p class="label_thin_white mb-0">'
+					htmlDataPublic += '<p class="label_white mb-0">'
 					htmlDataPublic += obj['name']
 					htmlDataPublic += '</p>'
-					htmlDataPublic += '<p class="nw_name">'
+					htmlDataPublic += '<p class="nw_name mb-3">'
 					htmlDataPublic += obj['localPortNumber']
 					htmlDataPublic += '</p>'
 					htmlDataPublic += '<a title="Click here to Connect to the node" href="./join-public-network.html?joinPublicGenesisFile=' + obj['genesisFile'] + '&joinPublicDataDirPath=' + obj['dataDir'] + '&joinPublicLocalHostPort=' + obj['localPortNumber'] + '&joinPublicNetworkName=' + obj['name'] + '&joinPublicIpcPath=' + obj['ipc'] + '&joinPublicBootNode=' + obj['bootNode'] + '&joinPublicRPCPortNumber='+obj['rpcPort']+'">'
 					htmlDataPublic += 'Connect'
 					htmlDataPublic += '</a>'
-					htmlDataPublic += '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp'
-					htmlDataPublic += '<a href="?deletePath=' + file_path + '" title="Click here to delete network(It will not delete the network data)">'
-					htmlDataPublic += 'Delete'
+					htmlDataPublic += '<a href="?deletePath=' + file_path + '" title="Click here to delete network(It will not delete the network data)" class="d-block edit_nodes">'
+					htmlDataPublic += '<i class="fas fa-trash" style="color: #fff; font-size: 12px;"></i>'
 					htmlDataPublic += '</a>'
 					htmlDataPublic += '</div>'
 					$('#publicNetworkList').html(htmlDataPublic);
