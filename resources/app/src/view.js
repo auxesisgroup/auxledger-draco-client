@@ -5,7 +5,7 @@ const path = require('path')
 const {remote, dialog} = require('electron')
 const url = require('url');  
 const querystring = require('querystring');
-// const queryString = require('query-string');
+var http = require('http');
 
 // Global variables
 auxnetHomePath = process.env.AUXNET
@@ -35,10 +35,9 @@ $('#joinAuxnetPublic').on('click', () => {
 		$('.cust_form_group').delay(1500).removeClass("disabled");
 
 		var auxnetDataDirPath = document.getElementById("auxnetDataDirPath").value;
-		var auxnetPortNumber = document.getElementById("auxnetPortNumber").value;	
-		command = terminalCommandStart + auxnetHomePath + '/bin/gaux --datadir=' + auxnetDataDirPath + ' --port=' + auxnetPortNumber + terminalCommandEnd
-
-
+		var auxnetPortNumber = document.getElementById("auxnetPortNumber").value;
+		var auxnetRPCPortNumber = document.getElementById("auxnetRPCPortNumber").value;
+		
 		// -------------------------- Saving Data - Starts
 		ipcPath = auxnetDataDirPath + '/gaux.ipc'
 		file_path = networkDataDir + auxnetDirName + auxnetDataFileName + '.json'
@@ -47,11 +46,14 @@ $('#joinAuxnetPublic').on('click', () => {
 			'network' : auxnetNetworkName , 
 			'dataDir' : auxnetDataDirPath, 
 			'localPortNumber' :  auxnetPortNumber, 
-			'ipc' : ipcPath}
+			'ipc' : ipcPath,
+			'rpcPort': auxnetRPCPortNumber
+		}
 		saveData(file_path, networkData)
 		// --------------------------  Saving Data - Ends
 
 		// Starting Node
+		command = terminalCommandStart + auxnetHomePath + '/bin/gaux --datadir=' + auxnetDataDirPath + ' --rpc --rpccorsdomain="*" --port=' + auxnetPortNumber + ' --rpcport=' + auxnetRPCPortNumber + terminalCommandEnd
 		myShell.execute(command);
 
 		// Set IPC Path
@@ -70,11 +72,6 @@ $('#attachAuxnetTerminal').on('click', () => {
 	myShell.execute(command);
 })
 
-// $('#browseAuxnetDataDirPath').on('click', () => {
-// 	alert('1111111111')
-// })
-
-
 // Auxnet Public - Ends
 
 // Public Network - Starts
@@ -91,8 +88,8 @@ $('#startPublic').on('click', () => {
 		var publicDataDirPath = document.getElementById("publicDataDirPath").value;
 		var publicGenesisFile = document.getElementById("publicGenesisFile").value;
 		var publicPortNumber = document.getElementById("publicPortNumber").value;
-		command = terminalCommandStart + auxnetHomePath + '/bin/gaux init ' + publicGenesisFile + ' --datadir=' + publicDataDirPath + '; ' + auxnetHomePath + '/bin/gaux --datadir=' + publicDataDirPath + ' --port=' + publicPortNumber + terminalCommandEnd
-
+		var publicRPCPortNumber = document.getElementById("publicRPCPortNumber").value;
+		
 		// -------------------------- Saving Data - Starts
 		ipcPath = publicDataDirPath + '/gaux.ipc'
 		file_path = networkDataDir + publicDirName + publicNetworkName + '.json'
@@ -102,11 +99,14 @@ $('#startPublic').on('click', () => {
 			'dataDir' : publicDataDirPath, 
 			'localPortNumber' :  publicPortNumber, 
 			'genesisFile' :  publicGenesisFile, 
-			'ipc' : ipcPath}
+			'ipc' : ipcPath,
+			'rpcPort': publicRPCPortNumber
+		}
 		saveData(file_path, networkData)		
 		// --------------------------  Saving Data - Ends
 
 		// Starting Node
+		command = terminalCommandStart + auxnetHomePath + '/bin/gaux init ' + publicGenesisFile + ' --datadir=' + publicDataDirPath + '; ' + auxnetHomePath + '/bin/gaux --datadir=' + publicDataDirPath + ' --rpc --rpccorsdomain="*" --port=' + publicPortNumber + ' --rpcport=' + publicRPCPortNumber + terminalCommandEnd
 		myShell.execute(command);
 
 		// Set IPC Path
@@ -139,7 +139,7 @@ $('#joinPublicNetwork').on('click', () => {
 	var joinPublicDataDirPath = document.getElementById("joinPublicDataDirPath").value;
 	var joinPublicBootNode = document.getElementById("joinPublicBootNode").value;
 	var joinPublicLocalHostPort = document.getElementById("joinPublicLocalHostPort").value;
-	command = terminalCommandStart + auxnetHomePath + '/bin/gaux --datadir=' + joinPublicDataDirPath + ' init ' + joinPublicGenesisFile + '; ' + auxnetHomePath + '/bin/gaux --datadir=' + joinPublicDataDirPath + ' --port=' + joinPublicLocalHostPort +  ' --bootnodes=' + joinPublicBootNode + terminalCommandEnd
+	var joinPublicRPCPortNumber = document.getElementById("joinPublicRPCPortNumber").value;	
 
 	// -------------------------- Saving Data - Starts
 	ipcPath = joinPublicDataDirPath + '/gaux.ipc'
@@ -151,10 +151,14 @@ $('#joinPublicNetwork').on('click', () => {
 		'localPortNumber' :  joinPublicLocalHostPort, 
 		'genesisFile' :  joinPublicGenesisFile, 
 		'ipc' : ipcPath,
-		'bootNode' : joinPublicBootNode}
+		'bootNode' : joinPublicBootNode,
+		'rpcPort': joinPublicRPCPortNumber
+	}
 	saveData(file_path, networkData)		
 	// --------------------------  Saving Data - Ends
 
+	// Starting Node
+	command = terminalCommandStart + auxnetHomePath + '/bin/gaux --datadir=' + joinPublicDataDirPath + ' init ' + joinPublicGenesisFile + '; ' + auxnetHomePath + '/bin/gaux --datadir=' + joinPublicDataDirPath + ' --rpc --rpccorsdomain="*" --port=' + joinPublicLocalHostPort + ' --rpcport=' + joinPublicRPCPortNumber + ' --bootnodes=' + joinPublicBootNode + terminalCommandEnd
 	myShell.execute(command);
 
 	// Set IPC Path
@@ -167,6 +171,40 @@ $('#joinAttachPublicTerminal').on('click', () => {
 	command = terminalCommandStart + auxnetHomePath + '/bin/gaux attach ipc:' + joinPublicIpcPath + terminalCommandEnd
 	myShell.execute(command);
 })
+
+
+// $('#testRPC').on('click', () => {
+
+// 	try {
+// 		var rpc = require('node-json-rpc');
+// 		var options = {
+// 		  // int port of rpc server, default 5080 for http or 5433 for https
+// 		  port: 30304,
+// 		  // string domain name or ip of rpc server, default '127.0.0.1'
+// 		  host: 'http://127.0.0.1',
+// 		  // string with default path, default '/'
+// 		  path: '/',
+// 		  // boolean false to turn rpc checks off, default true
+// 		  strict: false
+// 		};
+
+// 		// Create a server object with options
+// 		var client = new rpc.Client(options);
+		
+// 		client.call({"jsonrpc": "2.0", "method": "eth_syncing", "params": [], "id": 0},function (err, res) {
+// 		    if (err) {alert(err); }
+// 		    else { alert(res); }
+// 		  }
+// 		);		
+// 	}
+
+// 	catch(err){
+// 		alert(err.message)
+// 	}
+	
+	
+// })
+// Public Network - Ends
 
 
 // Common - Starts
@@ -229,7 +267,7 @@ function dashboardAuxnetPublic(){
 				htmlData += '<p class="nw_name">'
 				htmlData += obj['localPortNumber']
 				htmlData += '</p>'
-				htmlData += '<a title="Click here to Connect to the node" href="./auxnet.html?auxnetDataDirPath=' + obj['dataDir'] + '&auxnetPortNumber=' + obj['localPortNumber'] + '&auxnetIpcPath=' + obj['ipc']  + '" >'
+				htmlData += '<a title="Click here to Connect to the node" href="./auxnet.html?auxnetDataDirPath=' + obj['dataDir'] + '&auxnetPortNumber=' + obj['localPortNumber'] + '&auxnetIpcPath=' + obj['ipc']  + '&auxnetRPCPortNumber='+ obj['rpcPort'] +'" >'
 				htmlData += 'Connect'
 				htmlData += '</a>'
 				htmlData += '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp'
@@ -313,7 +351,7 @@ function dashboardPublic(){
 					htmlDataPublic += '<p class="nw_name">'
 					htmlDataPublic += obj['localPortNumber']
 					htmlDataPublic += '</p>'
-					htmlDataPublic += '<a title="Click here to Connect to the node" href="./create-public-network.html?publicGenesisFile=' + obj['genesisFile'] + '&publicDataDirPath=' + obj['dataDir'] + '&publicPortNumber=' + obj['localPortNumber'] + '&publicNetworkName=' + obj['name'] + '&publicIpcPath=' + obj['ipc'] + '">'
+					htmlDataPublic += '<a title="Click here to Connect to the node" href="./create-public-network.html?publicGenesisFile=' + obj['genesisFile'] + '&publicDataDirPath=' + obj['dataDir'] + '&publicPortNumber=' + obj['localPortNumber'] + '&publicNetworkName=' + obj['name'] + '&publicIpcPath=' + obj['ipc'] + '&publicRPCPortNumber='+obj['rpcPort']+'">'
 					htmlDataPublic += 'Connect'
 					htmlDataPublic += '</a>'
 					htmlDataPublic += '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp'
@@ -377,7 +415,7 @@ function dashboardOtherPublic(){
 					htmlDataPublic += '<p class="nw_name">'
 					htmlDataPublic += obj['localPortNumber']
 					htmlDataPublic += '</p>'
-					htmlDataPublic += '<a title="Click here to Connect to the node" href="./join-public-network.html?joinPublicGenesisFile=' + obj['genesisFile'] + '&joinPublicDataDirPath=' + obj['dataDir'] + '&joinPublicLocalHostPort=' + obj['localPortNumber'] + '&joinPublicNetworkName=' + obj['name'] + '&joinPublicIpcPath=' + obj['ipc'] + '&joinPublicBootNode=' + obj['bootNode'] + '">'
+					htmlDataPublic += '<a title="Click here to Connect to the node" href="./join-public-network.html?joinPublicGenesisFile=' + obj['genesisFile'] + '&joinPublicDataDirPath=' + obj['dataDir'] + '&joinPublicLocalHostPort=' + obj['localPortNumber'] + '&joinPublicNetworkName=' + obj['name'] + '&joinPublicIpcPath=' + obj['ipc'] + '&joinPublicBootNode=' + obj['bootNode'] + '&joinPublicRPCPortNumber='+obj['rpcPort']+'">'
 					htmlDataPublic += 'Connect'
 					htmlDataPublic += '</a>'
 					htmlDataPublic += '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp'
@@ -408,8 +446,8 @@ function dashboardOtherPublic(){
 function deletePath(path){
 
 	swal({
-	  title: "Are you sure you want to delete*?",
-	  text: "*It will not delete the node data.",
+	  title: "Are you sure you want to delete?",
+	  text: "It will not delete the node data.",
 	  icon: "warning",
 	  buttons: true,
 	  dangerMode: true,
@@ -433,12 +471,14 @@ $( document ).ready(function() {
 	auxnetDataDirPath = process.env.HOME + '/.auxnet/dataDirectory/mainnet'
 	auxnetPortNumber = 30303
 	auxnetIpcPath = process.env.HOME + '/.auxnet/dataDirectory/mainnet/gaux.ipc'
+	auxnetRPCPortNumber = 8545
 	
 	publicNetworkName = 'MyNetwork1'
-	publicGenesisFile = auxnetHomePath+ '/genesis.json'
+	publicGenesisFile = auxnetHomePath + '/genesis.json'
 	publicDataDirPath = process.env.HOME + '/.auxnet/dataDirectory/public'
 	publicPortNumber = 30304	
 	publicIpcPath = process.env.HOME + '/.auxnet/dataDirectory/public/gaux.ipc'
+	publicRPCPortNumber = 8546
 
 	joinPublicNetworkName = 'OtherNetwork1'
 	joinPublicGenesisFile = auxnetHomePath + '/genesis.json'
@@ -446,6 +486,7 @@ $( document ).ready(function() {
 	joinPublicBootNode = 'enode://abcd@127.0.0.1:30303'
 	joinPublicLocalHostPort = 30305
 	joinPublicIpcPath = process.env.HOME + '/.auxnet/public/gaux.ipc'
+	joinPublicRPCPortNumber = 8547
 
 	
 	var dataDict = {};
@@ -471,6 +512,8 @@ $( document ).ready(function() {
 	    else $('#auxnetPortNumber').val(auxnetPortNumber)
 	    if (dataDict['auxnetIpcPath']) $('#auxnetIpcPath').val(dataDict['auxnetIpcPath'])
 	    else $('#auxnetIpcPath').val(auxnetIpcPath)
+	    if (dataDict['auxnetRPCPortNumber']) $('#auxnetRPCPortNumber').val(dataDict['auxnetRPCPortNumber'])
+	    else $('#auxnetRPCPortNumber').val(auxnetRPCPortNumber)
 
 	    if (dataDict['publicGenesisFile']) $('#publicGenesisFile').val(dataDict['publicGenesisFile'])
 	    else $('#publicGenesisFile').val(publicGenesisFile)
@@ -482,6 +525,8 @@ $( document ).ready(function() {
 	    else $('#publicNetworkName').val(publicNetworkName)
 	    if (dataDict['publicIpcPath']) $('#publicIpcPath').val(dataDict['publicIpcPath'])
 	    else $('#publicIpcPath').val(publicIpcPath)
+	    if (dataDict['publicRPCPortNumber']) $('#publicRPCPortNumber').val(dataDict['publicRPCPortNumber'])
+	    else $('#publicRPCPortNumber').val(publicRPCPortNumber)
 
 	    if (dataDict['joinPublicNetworkName']) $('#joinPublicNetworkName').val(dataDict['joinPublicNetworkName'])
 	    else $('#joinPublicNetworkName').val(joinPublicNetworkName)
@@ -495,6 +540,8 @@ $( document ).ready(function() {
 	    else $('#joinPublicLocalHostPort').val(joinPublicLocalHostPort)
 	    if (dataDict['joinPublicIpcPath']) $('#joinPublicIpcPath').val(dataDict['joinPublicIpcPath'])
 	    else $('#joinPublicIpcPath').val(joinPublicIpcPath)
+	    if (dataDict['joinPublicRPCPortNumber']) $('#joinPublicRPCPortNumber').val(dataDict['joinPublicRPCPortNumber'])
+	    else $('#joinPublicRPCPortNumber').val(joinPublicRPCPortNumber)
 
 	}
 	else{
@@ -505,6 +552,8 @@ $( document ).ready(function() {
 		$('#auxnetDataDirPath').val(auxnetDataDirPath);
 		$('#auxnetPortNumber').val(auxnetPortNumber);
 		$('#auxnetIpcPath').val(auxnetIpcPath);
+		$('#auxnetRPCPortNumber').val(auxnetRPCPortNumber);
+		
 
 		// Create Public Network
 		$('#publicNetworkName').val(publicNetworkName);
@@ -512,6 +561,7 @@ $( document ).ready(function() {
 		$('#publicDataDirPath').val(publicDataDirPath);
 		$('#publicPortNumber').val(publicPortNumber);
 		$('#publicIpcPath').val(publicIpcPath);
+		$('#publicRPCPortNumber').val(publicRPCPortNumber);
 
 	    // Join Public
 	    $('#joinPublicNetworkName').val(joinPublicNetworkName);
@@ -520,6 +570,7 @@ $( document ).ready(function() {
 		$('#joinPublicBootNode').val(joinPublicBootNode);
 		$('#joinPublicLocalHostPort').val(joinPublicLocalHostPort);
 		$('#joinPublicIpcPath').val(joinPublicIpcPath);
+		$('#joinPublicRPCPortNumber').val(joinPublicRPCPortNumber);
 
 	}
 	
