@@ -37,7 +37,7 @@ joinPublicGenesisFile = auxnetHomePath + '/genesis.json'
 joinPublicDataDirPath = process.env.HOME + '/.auxnet/dataDirectory/otherPublic'
 joinPublicBootNode = 'enode://abcd@127.0.0.1:30303'
 joinPublicLocalHostPort = 30305
-joinPublicIpcPath = process.env.HOME + '/.auxnet/public/gaux.ipc'
+joinPublicIpcPath = process.env.HOME + '/.auxnet/dataDirectory/otherPublic/gaux.ipc'
 joinPublicRPCPortNumber = 8547
 
 //App Quit
@@ -229,7 +229,7 @@ $('#joinPublicNetwork').on('click', () => {
 	myShell.execute(command);
 
 	// Set IPC Path
-	$('#publicIpcPath').val(ipcPath);
+	$('#joinPublicIpcPath').val(ipcPath);
 })
 
 
