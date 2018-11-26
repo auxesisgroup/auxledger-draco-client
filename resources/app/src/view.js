@@ -267,24 +267,19 @@ $('#browseJoinPublicGenesisFile').on('click', () => {
 	
 });
 
-// $('#testRPC').on('click', () => {
+$('#testRPC').on('click', async () => {
 
-// 	try {
-// 		var Web3 = require('web3');
-// 		web3 = new Web3("http://localhost:8546");
-// 		address = '0x5eb9d9d2df3e4b8de2dda0df1f3dd5e7b316e18e'
-// 		web3.eth.net.isListening((err, result) => {
-// 			if (result) alert('True')
-// 			else alert('False')
-// 		})		
-// 	}
+	try {
+		ret = await util.getEnodeID()
+		alert(ret)
+	}
 
-// 	catch(err){
-// 		alert(err.message)
-// 	}
+	catch(err){
+		alert(err.message)
+	}
 	
 	
-// })
+})
 // Public Network - Ends
 
 
