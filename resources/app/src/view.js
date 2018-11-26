@@ -328,7 +328,7 @@ function dashboardAuxnetPublic(){
 			if (err){
 					htmlData += '<div class="intro_screen_link existing_nodes">'
 					htmlData += '<p class="label_white mb-0">'
-					htmlData += 'No Network Found'
+					htmlData += 'No Saved Configuration Found'
 					htmlData += '</p>'
 					htmlData += '</div>'
 					$('#auxnetPublicNetworkList').html(htmlData);
@@ -364,7 +364,7 @@ function dashboardAuxnetPublic(){
     	alert(err.message);
     	htmlData += '<div class="intro_screen_link existing_nodes">'
 		htmlData += '<p class="label_white mb-0">'
-		htmlData += 'No Network Found'
+		htmlData += 'No Saved Configuration Found'
 		htmlData += '</p>'
 		htmlData += '</div>'
 		$('#auxnetPublicNetworkList').html(htmlData);
@@ -395,7 +395,7 @@ function dashboardPublic(){
 			  if (files.length == 0 && otherPresent == false){
 			  	htmlDataPublic += '<div class="intro_screen_link existing_nodes">'
 				htmlDataPublic += '<p class="label_white mb-0">'
-				htmlDataPublic += 'No Network Found'
+				htmlDataPublic += 'No Saved Configuration Found'
 				htmlDataPublic += '</p>'
 				htmlDataPublic += '</div>'
 				$('#publicNetworkList').html(htmlDataPublic);
@@ -410,7 +410,7 @@ function dashboardPublic(){
 					if (err){
 						htmlDataPublic += '<div class="intro_screen_link existing_nodes">'
 						htmlDataPublic += '<p class="label_white mb-0">'
-						htmlDataPublic += 'No Network Found'
+						htmlDataPublic += 'No Saved Configuration Found'
 						htmlDataPublic += '</p>'
 						htmlDataPublic += '</div>'
 						$('#publicNetworkList').html(htmlDataPublic);
@@ -446,7 +446,7 @@ function dashboardPublic(){
 	catch(err) {
     	htmlDataPublic += '<div class="intro_screen_link existing_nodes">'
 		htmlDataPublic += '<p class="label_white mb-0">'
-		htmlDataPublic += 'No Active Nodes'
+		htmlDataPublic += 'No Saved Configuration Found'
 		htmlDataPublic += '</p>'
 		htmlDataPublic += '</div>'
 		$('#publicNetworkList').html(htmlDataPublic);
@@ -473,7 +473,7 @@ function dashboardOtherPublic(){
 					if (err){
 						htmlDataPublic += '<div class="intro_screen_link existing_nodes">'
 						htmlDataPublic += '<p class="label_white mb-0">'
-						htmlDataPublic += 'No Other Public Network Found'
+						htmlDataPublic += 'No Saved Configuration Found'
 						htmlDataPublic += '</p>'
 						htmlDataPublic += '</div>'
 						$('#publicNetworkList').html(htmlDataPublic);
