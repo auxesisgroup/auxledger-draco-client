@@ -8,7 +8,7 @@ function createWindow() {
 	win = new BrowserWindow({
 		width: 1280,
 		height: 700,
-		icon: path.join(__dirname, '/src/icons/logo.ico')
+		icon: path.join(__dirname, '/src/icons/logo.png')
 	})
 	win.loadURL(url.format ({ 
 	  pathname: path.join(__dirname, '/src/index.html'), 
