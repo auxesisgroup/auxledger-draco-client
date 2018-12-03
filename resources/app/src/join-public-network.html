@@ -73,11 +73,25 @@
                     </div>
 
                     <div class="col-10">
+                            <div class="form-group cust_form_group" title="Network Name for Reference(Should be unique and does not contain space)">
+                                <label for="">Select Consensus Algorithm</label>
+                                <br>
+                                <select id="selecJoinPublicNetworkConsensus">
+                                    <option value="joinPublicNetworkConsensusPOW">Proof Of Work</option>                                    
+                                    <option value="joinPublicNetworkConsensusPOA">Proof Of Authority</option>
+                                </select>
+                            </div>
+                            <div class="form-group cust_form_group" id="joinPublicNetworkPOAParams" style="display: none;">
+                                <div class="form-group cust_form_group" title="Password for encrypting Private key file">
+                                    <label for="">Password for account</label>
+                                    <input type="text" class="form-control" id="joinPublicAccountPassword" placeholder="Password">
+                                </div>                                
+                            </div>
                             <div class="form-group cust_form_group">
                                 <label for="">Name (Should be Unique and does not contain blank spaces)</label>
                                 <input type="text" class="form-control" id="joinPublicNetworkName" placeholder="Network Name">
                             </div>
-                            <div class="form-group cust_form_group" title="Path of the Genesis file of the corresponding blockchain network">
+                            <div id="divJoinPublicGenesis" class="form-group cust_form_group" title="Path of the Genesis file of the corresponding blockchain network">
                                 <label for="">
                                     Upload Genesis File
                                     <span><img id="browseJoinPublicGenesisFile" src="./assets/img/Folder_btn.svg" class="img-fluid" alt=""></span>

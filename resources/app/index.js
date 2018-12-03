@@ -14,7 +14,8 @@ function createWindow() {
 	  pathname: path.join(__dirname, '/src/index.html'), 
 	  protocol: 'file:', 
 	  slashes: true 
-	})) 
+	}))
+	win.maximize(); 
 }  
 
 

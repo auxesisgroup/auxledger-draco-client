@@ -74,10 +74,30 @@
 
                     <div class="col-10">
                             <div class="form-group cust_form_group" title="Network Name for Reference(Should be unique and does not contain space)">
+                                <label for="">Select Consensus Algorithm</label>
+                                <br>
+                                <select id="selecPublicNetworkConsensus">
+                                    <option value="publicNetworkConsensusPOW">Proof Of Work</option>                                    
+                                    <option value="publicNetworkConsensusPOA">Proof Of Authority</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group cust_form_group" id="publicNetworkPOAParams" style="display: none;">
+                                <div class="form-group cust_form_group" title="Password for encrypting Private key file">
+                                    <label for="">Password for account</label>
+                                    <input type="text" class="form-control" id="publicAccountPassword" placeholder="Password">
+                                </div>
+                                <div class="form-group cust_form_group" title="Chain ID for the blockchain">
+                                    <label for="">Chain ID</label>
+                                    <input type="text" class="form-control" id="publicNetworkPOAChainID" placeholder="Chain ID">
+                                </div>
+                            </div>
+
+                            <div class="form-group cust_form_group" title="Network Name for Reference(Should be unique and does not contain space)">
                                 <label for="">Name (Should be unique and does not contain space)</label>
                                 <input type="text" class="form-control" id="publicNetworkName" placeholder="Network Name">
                             </div>
-                            <div class="form-group cust_form_group" title="Path of the Genesis file of the blockchain">
+                            <div id="divPublicGenesis" class="form-group cust_form_group" title="Path of the Genesis file of the blockchain">
                                 <label for="">
                                     Upload Genesis File
                                     <span><img id="browsePublicGenesisFile" src="./assets/img/Folder_btn.svg" class="img-fluid" alt=""></span>
