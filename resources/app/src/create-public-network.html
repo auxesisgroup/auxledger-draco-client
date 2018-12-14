@@ -6,6 +6,25 @@
     <title>AUXLEDGER-DRACO-CLIENT</title>
     <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="./assets/css/main.css">
+
+
+    <style>
+        .select_box{
+            border-radius: 0px;
+            border: 0px;
+            color: #fff;
+            background: #00538C;
+        }
+
+        .select_box:focus {
+            color: #fff;
+            background-color: #00538C;
+            border-color: transparent;
+            border: 0px;
+            outline: 0;
+            box-shadow: none;
+        }
+    </style>
 </head>
 
 <body class="relative">
@@ -56,7 +75,7 @@
                 <a href="./support.html" class="bottom_links">Support</a>
                 <a href="http://testnet.auxledger.org/" target="_blank" class="bottom_links">Explorer</a>
                 <p class="app_version">
-                    Draco Client v 0.1
+                    Draco Client v 0.2
                 </p>
         </div>
     </div>
@@ -73,53 +92,62 @@
                     </div>
 
                     <div class="col-10">
-                            <div class="form-group cust_form_group" title="Network Name for Reference(Should be unique and does not contain space)">
+
+                        <div class="col-md-4 col-lg-3">
+                            <div class="form-group">
+                            
                                 <label for="">Select Consensus Algorithm</label>
-                                <br>
-                                <select id="selecPublicNetworkConsensus">
+                                <select id="selectPublicNetworkConsensus" class="form-control select_box">
                                     <option value="publicNetworkConsensusPOW">Proof Of Work</option>                                    
                                     <option value="publicNetworkConsensusPOA">Proof Of Authority</option>
                                 </select>
-                            </div>
 
-                            <div class="form-group cust_form_group" id="publicNetworkPOAParams" style="display: none;">
-                                <div class="form-group cust_form_group" title="Password for encrypting Private key file">
-                                    <label for="">Password for account</label>
-                                    <input type="text" class="form-control" id="publicAccountPassword" placeholder="Password">
-                                </div>
-                                <div class="form-group cust_form_group" title="Chain ID for the blockchain">
-                                    <label for="">Chain ID</label>
-                                    <input type="text" class="form-control" id="publicNetworkPOAChainID" placeholder="Chain ID">
-                                </div>
-                            </div>
+                             </div>
+                        </div>
+                            
 
-                            <div class="form-group cust_form_group" title="Network Name for Reference(Should be unique and does not contain space)">
-                                <label for="">Name (Should be unique and does not contain space)</label>
-                                <input type="text" class="form-control" id="publicNetworkName" placeholder="Network Name">
+                        <div class="form-group cust_form_group" id="publicNetworkPOAParams" style="display: none;">
+                            <div class="form-group cust_form_group" title="Password for encrypting Private key file">
+                                <label for="">Password for account</label>
+                                <input type="text" class="form-control" id="publicAccountPassword" placeholder="Password">
                             </div>
-                            <div id="divPublicGenesis" class="form-group cust_form_group" title="Path of the Genesis file of the blockchain">
-                                <label for="">
-                                    Upload Genesis File
-                                    <span><img id="browsePublicGenesisFile" src="./assets/img/Folder_btn.svg" class="img-fluid" alt=""></span>
-                                </label>
-                                <input type="text" class="form-control" id="publicGenesisFile" placeholder="Enter path to the GENESIS FILE (JSON file)">
+                            <div class="form-group cust_form_group" title="Chain ID for the blockchain">
+                                <label for="">Chain ID</label>
+                                <input type="text" class="form-control" id="publicNetworkPOAChainID" placeholder="Chain ID">
                             </div>
-                            <div class="form-group cust_form_group" title="Path where you want to store the blockchain data">
-                                <label for="">
-                                    Data directory Path
-                                    <span><img id="browsePublicDataDirPath" src="./assets/img/Folder_btn.svg" class="img-fluid" alt="" title="click to select folder"></span>
-                                </label>
-                                <input type="text" class="form-control" id="publicDataDirPath" placeholder="Enter path for Data directory">
-                            </div>
-                            <div class="form-group cust_form_group" title="Local machine port where node will run">
-                                <label for="">Local Port Number</label>
-                                <input type="text" class="form-control" id="publicPortNumber" placeholder="Assign a Local Port Number to host Public Network">
-                            </div>
-                            <div class="form-group cust_form_group" title="RPC port number to interact with public Network">
-                                <label for="">RPC Port Number</label>
-                                <input type="text" class="form-control" id="publicRPCPortNumber" placeholder="RPC Port Number">
-                            </div>
-                            <button type="submit" class="btn cust_btn" id="startPublic" title="Click to start public node">Create New Network</button>
+                        </div>
+
+                        <div class="form-group cust_form_group" title="Network Name for Reference(Should be unique and does not contain space)">
+                            <label for="">Name (Should be unique and does not contain space)</label>
+                            <input type="text" class="form-control" id="publicNetworkName" placeholder="Network Name">
+                        </div>
+                        <!-- <div id="divPublicGenesis" class="form-group cust_form_group" title="Path of the Genesis file of the blockchain">
+                            <label for="">
+                                Upload Genesis File
+                                <span><img id="browsePublicGenesisFile" src="./assets/img/Folder_btn.svg" class="img-fluid" alt=""></span>
+                            </label>
+                            <input type="text" class="form-control" id="publicGenesisFile" placeholder="Enter path to the GENESIS FILE (JSON file)">
+                        </div> -->
+                        <div class="form-group cust_form_group" title="Fix Gas Price for the Network">
+                            <label for="">Gas Price (*Greater than 1)</label>
+                            <input type="text" class="form-control" id="publicGasPrice" placeholder="Gas Price">
+                        </div>
+                        <div class="form-group cust_form_group" title="Path where you want to store the blockchain data">
+                            <label for="">
+                                Data directory Path
+                                <span><img id="browsePublicDataDirPath" src="./assets/img/Folder_btn.svg" class="img-fluid" alt="" title="click to select folder"></span>
+                            </label>
+                            <input type="text" class="form-control" id="publicDataDirPath" placeholder="Enter path for Data directory">
+                        </div>
+                        <div class="form-group cust_form_group" title="Local machine port where node will run">
+                            <label for="">Local Port Number</label>
+                            <input type="text" class="form-control" id="publicPortNumber" placeholder="Assign a Local Port Number to host Public Network">
+                        </div>
+                        <div class="form-group cust_form_group" title="RPC port number to interact with public Network">
+                            <label for="">RPC Port Number</label>
+                            <input type="text" class="form-control" id="publicRPCPortNumber" placeholder="RPC Port Number">
+                        </div>
+                        <button type="submit" class="btn cust_btn" id="startPublic" title="Click to start public node">Create New Network</button>
                             <!-- <button type="submit" class="btn cust_btn" id="testRPC" title="Click to start public node">RPC</button> -->
 
                         <p class="auxnet_conneted relative" id="greendiv" style="display: none">
@@ -155,6 +183,7 @@
         crossorigin="anonymous"></script>
     <script src="./assets/js/bootstrap.min.js"></script>
     <script src="./assets/js/uiFunctions.js"></script>
+    
 </body>
 
 </html>

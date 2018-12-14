@@ -28,6 +28,7 @@ auxnetPortNumber = 30303
 auxnetIpcPath = process.env.HOME + '/.auxnet/dataDirectory/mainnet/gaux.ipc'
 auxnetRPCPortNumber = 8545
 
+publicGasPrice = 200000000
 publicNetworkNamePOA = "POA1"
 publicAccountPassword = 'aaaa'
 publicNetworkName = 'MyNetwork1'
@@ -132,18 +133,17 @@ $('#startPublic').on('click',async () => {
 		$('.cust_form_group, .cust_btn, .form_control').delay(1500).removeAttr("disabled");
 		$('.cust_form_group').delay(1500).removeClass("disabled");
 
-		var publicNetworkConsensus = document.getElementById("selecPublicNetworkConsensus").value
+		var publicNetworkConsensus = document.getElementById("selectPublicNetworkConsensus").value
 		var publicNetworkName = document.getElementById("publicNetworkName").value;
 		var publicDataDirPath = document.getElementById("publicDataDirPath").value;
-		var publicGenesisFile = document.getElementById("publicGenesisFile").value;
 		var publicPortNumber = document.getElementById("publicPortNumber").value;
 		var publicRPCPortNumber = document.getElementById("publicRPCPortNumber").value;
+		var publicGasPrice = document.getElementById("publicGasPrice").value;
 		var ipcPath = publicDataDirPath + '/gaux.ipc'
 
-		if (publicNetworkConsensus == "publicNetworkConsensusPOA"){
+		genesisFilePath = publicDataDirPath + '/genesis.json'
 
-			nodefilePath = nodesDataDir + publicDirNamePOA + publicNetworkName + '.json'
-			genesisFilePath = publicDataDirPath + '/genesis.json'
+		if (publicNetworkConsensus == "publicNetworkConsensusPOA"){
 
 			var publicAccountPassword = document.getElementById("publicAccountPassword").value;
 			var publicNetworkPOAChainID = document.getElementById("publicNetworkPOAChainID").value;
@@ -174,24 +174,27 @@ $('#startPublic').on('click',async () => {
 						}
 					}
 					obj['extraData'] = extraData
+					obj['gasPrice'] = publicGasPrice
 					util.saveNodeData(genesisFilePath, obj)
 				}			
 			})
 
 			// -------------------------- Saving Data - Starts
+			nodefilePath = nodesDataDir + publicDirNamePOA + publicNetworkName + '.json'	
 			networkData = { 
 				'name' : publicNetworkName, 
 				'network' : publicNetworkName , 
 				'dataDir' : publicDataDirPath, 
 				'localPortNumber' :  publicPortNumber, 
-				'genesisFile' :  publicGenesisFilePOA, 
+				'genesisFile' :  genesisFilePath, 
 				'ipc' : ipcPath,
 				'rpcPort': publicRPCPortNumber,
 				'address' : address,
 				'password' : publicAccountPassword, 
 				'passwordFile' : passFilePath,
 				'chainId' : publicNetworkPOAChainID,
-				'consensus' : 'POA'
+				'consensus' : 'POA',
+				'gasPrice' : publicGasPrice
 			}
 			util.saveNodeData(nodefilePath, networkData)
 			// --------------------------  Saving Data - Ends
@@ -202,23 +205,34 @@ $('#startPublic').on('click',async () => {
 		}
 		else {
 
+			// Create Genesis File. TODO - Need to be improved
+			fs.readFile(publicGenesisFile, 'utf8', function(err, contents) {
+				if (err) alert('Unable to Find/Read Genesis File')
+				else{
+					var obj = JSON.parse(contents);
+					obj['gasPrice'] = publicGasPrice
+					util.saveNodeData(genesisFilePath, obj)
+				}			
+			})
+
 			// -------------------------- Saving Data - Starts
-			filePath = nodesDataDir + publicDirName + publicNetworkName + '.json'
+			nodeFilePath = nodesDataDir + publicDirName + publicNetworkName + '.json'
 			networkData = { 
 				'name' : publicNetworkName, 
 				'network' : publicNetworkName , 
 				'dataDir' : publicDataDirPath, 
 				'localPortNumber' :  publicPortNumber, 
-				'genesisFile' :  publicGenesisFile, 
+				'genesisFile' :  genesisFilePath, 
 				'ipc' : ipcPath,
 				'rpcPort': publicRPCPortNumber,
-				'consensus' : 'POW'
+				'consensus' : 'POW',
+				'gasPrice' : publicGasPrice
 			}
-			util.saveNodeData(filePath, networkData)		
+			util.saveNodeData(nodeFilePath, networkData)		
 			// --------------------------  Saving Data - Ends
 
 			// Starting Node
-			command = terminalCommandStart + auxnetHomePath + '/bin/gaux init ' + publicGenesisFile + ' --datadir=' + publicDataDirPath + '; ' + auxnetHomePath + '/bin/gaux --datadir=' + publicDataDirPath + ' --rpc --rpccorsdomain="*" --port=' + publicPortNumber + ' --rpcport=' + publicRPCPortNumber + terminalCommandEnd
+			command = terminalCommandStart + auxnetHomePath + '/bin/gaux init ' + genesisFilePath + ' --datadir=' + publicDataDirPath + '; ' + auxnetHomePath + '/bin/gaux --datadir=' + publicDataDirPath + ' --rpc --rpccorsdomain="*" --port=' + publicPortNumber + ' --rpcport=' + publicRPCPortNumber + terminalCommandEnd
 			myShell.execute(command);
 		}
 
@@ -239,23 +253,21 @@ $('#attachPublicTerminal').on('click', () => {
 	myShell.execute(command);
 })
 
-$('#selecPublicNetworkConsensus').change(function() {
+$('#selectPublicNetworkConsensus').change(function() {
 	consensus = $(this).val();
 
 	if (consensus == "publicNetworkConsensusPOA"){
 		$('#publicNetworkName').val(publicNetworkNamePOA)
-		$('#publicNetworkPOAParams').show("slow");
-		$('#divPublicGenesis').hide("slow");
+		$('#publicNetworkPOAParams').show("slow");		
 	}
 	else {
 		$('#publicNetworkName').val(publicNetworkName)		
-		$('#publicNetworkPOAParams').hide("slow");
-		$('#divPublicGenesis').show("slow");
+		$('#publicNetworkPOAParams').hide("slow");		
 	}
 
 });
 
-$('#selecJoinPublicNetworkConsensus').change(function() {
+$('#selectJoinPublicNetworkConsensus').change(function() {
 	consensus = $(this).val();
 
 	if (consensus == "joinPublicNetworkConsensusPOA"){
@@ -287,17 +299,17 @@ $('#browsePublicDataDirPath').on('click', () => {
 });
 
 
-$('#browsePublicGenesisFile').on('click', () => {
-	try{
-		genPath = util.selectFile()
-		// Set Path
-		if (genPath) $('#publicGenesisFile').val(genPath);
-	}
-	catch(err){
-		alert(err.message)
-	}
+// $('#browsePublicGenesisFile').on('click', () => {
+// 	try{
+// 		genPath = util.selectFile()
+// 		// Set Path
+// 		if (genPath) $('#publicGenesisFile').val(genPath);
+// 	}
+// 	catch(err){
+// 		alert(err.message)
+// 	}
 	
-});
+// });
 
 
 $('#joinPublicNetwork').on('click',async () => {
@@ -310,7 +322,7 @@ $('#joinPublicNetwork').on('click',async () => {
 		$('.cust_form_group, .cust_btn, .form_control').delay(1500).removeAttr("disabled");
 		$('.cust_form_group').delay(1500).removeClass("disabled");
 
-		var joinPublicNetworkConsensus = document.getElementById("selecJoinPublicNetworkConsensus").value
+		var joinPublicNetworkConsensus = document.getElementById("selectJoinPublicNetworkConsensus").value
 		var joinPublicNetworkName = document.getElementById("joinPublicNetworkName").value;
 		var joinPublicGenesisFile = document.getElementById("joinPublicGenesisFile").value;
 		var joinPublicDataDirPath = document.getElementById("joinPublicDataDirPath").value;
@@ -551,7 +563,7 @@ function dashboardPublic(){
 					htmlDataPublic += '<p class="nw_name mb-3">'
 					htmlDataPublic += obj['localPortNumber']
 					htmlDataPublic += '</p>'
-					htmlDataPublic += '<a title="Click here to Connect to the node" href="./create-public-network.html?publicGenesisFile=' + obj['genesisFile'] + '&publicDataDirPath=' + obj['dataDir'] + '&publicPortNumber=' + obj['localPortNumber'] + '&publicNetworkName=' + obj['name'] + '&publicIpcPath=' + obj['ipc'] + '&publicRPCPortNumber='+obj['rpcPort']+'">'
+					htmlDataPublic += '<a title="Click here to Connect to the node" href="./create-public-network.html?publicGenesisFile=' + obj['genesisFile'] + '&publicDataDirPath=' + obj['dataDir'] + '&publicPortNumber=' + obj['localPortNumber'] + '&publicNetworkName=' + obj['name'] + '&publicIpcPath=' + obj['ipc'] + '&publicRPCPortNumber=' + obj['rpcPort'] + '&publicGasPrice=' + obj['gasPrice'] + '">'
 					htmlDataPublic += 'Connect'
 					htmlDataPublic += '</a>'
 					htmlDataPublic += '<a href="?deletePath=' + filePath + '" title="Click here to delete network(It will not delete the network data)" class="d-block edit_nodes">'
@@ -679,7 +691,7 @@ function dashboardPublicPOA(){
 					htmlDataPublic += '<p class="nw_name mb-3">'
 					htmlDataPublic += obj['localPortNumber']
 					htmlDataPublic += '</p>'
-					htmlDataPublic += '<a title="Click here to Connect to the node" href="./create-public-network.html?publicGenesisFile=' + obj['genesisFile'] + '&publicDataDirPath=' + obj['dataDir'] + '&publicPortNumber=' + obj['localPortNumber'] + '&publicNetworkName=' + obj['name'] + '&publicIpcPath=' + obj['ipc'] + '&publicRPCPortNumber='+obj['rpcPort']+'&publicNetworkPOAChainID='+obj['chainId']+'&publicAccountPassword='+obj['password']+'&publicConsensus='+obj['consensus']+'">'
+					htmlDataPublic += '<a title="Click here to Connect to the node" href="./create-public-network.html?publicGenesisFile=' + obj['genesisFile'] + '&publicDataDirPath=' + obj['dataDir'] + '&publicPortNumber=' + obj['localPortNumber'] + '&publicNetworkName=' + obj['name'] + '&publicIpcPath=' + obj['ipc'] + '&publicRPCPortNumber='+obj['rpcPort']+'&publicNetworkPOAChainID='+obj['chainId']+'&publicAccountPassword='+obj['password']+'&publicConsensus='+obj['consensus']+'&publicGasPrice=' + obj['gasPrice'] + '">'
 					htmlDataPublic += 'Connect'
 					htmlDataPublic += '</a>'
 					htmlDataPublic += '<a href="?deletePath=' + filePath + '" title="Click here to delete network(It will not delete the network data)" class="d-block edit_nodes">'
@@ -817,8 +829,10 @@ $( document ).ready(function() {
 	    if (dataDict['auxnetRPCPortNumber']) $('#auxnetRPCPortNumber').val(dataDict['auxnetRPCPortNumber'])
 	    else $('#auxnetRPCPortNumber').val(auxnetRPCPortNumber)
 
-	    if (dataDict['publicGenesisFile']) $('#publicGenesisFile').val(dataDict['publicGenesisFile'])
-	    else $('#publicGenesisFile').val(publicGenesisFile)
+
+	    
+		if (dataDict['publicGasPrice']) $('#publicGasPrice').val(dataDict['publicGasPrice'])
+	    else $('#publicGasPrice').val(publicGasPrice)
 	    if (dataDict['publicDataDirPath']) $('#publicDataDirPath').val(dataDict['publicDataDirPath'])
 	    else $('#publicDataDirPath').val(publicDataDirPath)	
 	    if (dataDict['publicPortNumber']) $('#publicPortNumber').val(dataDict['publicPortNumber'])
@@ -834,11 +848,10 @@ $( document ).ready(function() {
 	    if (dataDict['publicNetworkPOAChainID']) $('#publicNetworkPOAChainID').val(dataDict['publicNetworkPOAChainID'])
 	    else $('#publicNetworkPOAChainID').val(publicNetworkPOAChainID)
 	    if (dataDict['publicConsensus'] == 'POA') {
-	    	$('#selecPublicNetworkConsensus').val('publicNetworkConsensusPOA')
-	    	$('#publicNetworkPOAParams').show("slow");
-			$('#divPublicGenesis').hide("slow");
+	    	$('#selectPublicNetworkConsensus').val('publicNetworkConsensusPOA')
+	    	$('#publicNetworkPOAParams').show("slow");			
 	    }
-	    else $('#selecPublicNetworkConsensus').val('publicNetworkConsensusPOW')
+	    else $('#selectPublicNetworkConsensus').val('publicNetworkConsensusPOW')
 
 	    
 	    if (dataDict['joinPublicNetworkName']) $('#joinPublicNetworkName').val(dataDict['joinPublicNetworkName'])
@@ -858,10 +871,10 @@ $( document ).ready(function() {
 	    if (dataDict['joinPublicAccountPassword']) $('#joinPublicAccountPassword').val(dataDict['joinPublicAccountPassword'])
 	    else $('#joinPublicAccountPassword').val(joinPublicAccountPassword)
 	    if (dataDict['joinPublicConsensus'] == 'POA') {
-	    	$('#selecJoinPublicNetworkConsensus').val('joinPublicNetworkConsensusPOA')
+	    	$('#selectJoinPublicNetworkConsensus').val('joinPublicNetworkConsensusPOA')
 	    	$('#joinPublicNetworkPOAParams').show("slow");			
 	    }
-	    else $('#selecJoinPublicNetworkConsensus').val('joinPublicNetworkConsensusPOW')
+	    else $('#selectJoinPublicNetworkConsensus').val('joinPublicNetworkConsensusPOW')
     	
 
 	}
@@ -878,13 +891,14 @@ $( document ).ready(function() {
 
 		// Create Public Network
 		$('#publicNetworkName').val(publicNetworkName);
-		$('#publicGenesisFile').val(publicGenesisFile);
 		$('#publicDataDirPath').val(publicDataDirPath);
 		$('#publicPortNumber').val(publicPortNumber);
 		$('#publicIpcPath').val(publicIpcPath);
 		$('#publicRPCPortNumber').val(publicRPCPortNumber);
 		$('#publicAccountPassword').val(publicAccountPassword);
 		$('#publicNetworkPOAChainID').val(publicNetworkPOAChainID);
+		$('#publicGasPrice').val(publicGasPrice);
+		
 
 	    // Join Public
 	    $('#joinPublicNetworkName').val(joinPublicNetworkName);
@@ -910,9 +924,7 @@ $( document ).ready(function() {
 	// $('#joinPublicNetworkPOAParams').show("slow");
 	// $('#divPublicGenesis').hide("slow");
 	// // $('#divJoinPublicGenesis').hide("slow");
-	// // TODO - To Be Removed
-	
-	
+	// // TODO - To Be Removed	
 
 });
 
