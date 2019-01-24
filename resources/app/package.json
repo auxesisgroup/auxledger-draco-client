@@ -8,17 +8,23 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "adm-zip": "^0.4.13",
     "asar": "^0.14.5",
+    "axios": "^0.18.0",
     "bower": "^1.8.4",
     "chalk": "^2.4.1",
     "child_process": "^1.0.2",
     "electron": "^3.0.10",
     "figlet": "^1.2.1",
+    "filesaver": "0.0.13",
+    "fs": "0.0.1-security",
     "inquirer": "^6.2.0",
     "jquery": "^3.3.1",
+    "jszip": "^3.1.5",
     "sharp": "^0.21.0",
     "shelljs": "^0.8.3",
-    "web3": "^1.0.0-beta.36"
+    "web3": "^1.0.0-beta.36",
+    "zip-local": "^0.3.4"
   },
   "devDependencies": {
     "electron-rebuild": "^1.8.2"
