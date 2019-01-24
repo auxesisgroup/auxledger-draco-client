@@ -150,8 +150,9 @@ $('#startPublic').on('click', async () => {
 		if (flag == true) {
 			alert("You chose to use the previous network data!");
 		} else {
-			deleteData(publicDataDirPath);
-			alert("You chose to use the newly submitted data to start the node!");
+			// deleteData(publicDataDirPath);
+			alert("You first need to delete that data!");
+			return;
 		}
 
 
@@ -265,7 +266,7 @@ function findDir(publicDataDirPath) {
 		fs.open(publicDataDirPath, 'wx', (err, fd) => {
 			if (err) {
 				if (err.code === 'EEXIST') {
-					var a = confirm("The mentioned Datadirectory already has previous network data in it! To continue using that data, press OK! To delete the previous data and start new network press CANCEL!");
+					var a = confirm("The mentioned Datadirectory already has previous network data in it! To continue using that data, press OK! Or you will need to delete that data to use new data!!");
 					resolve(a);
 				} else {
 					resolve(a);
