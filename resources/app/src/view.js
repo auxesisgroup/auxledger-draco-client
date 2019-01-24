@@ -147,7 +147,12 @@ $('#startPublic').on('click', async () => {
 
 		var flag;
 		flag = await findDir(publicDataDirPath);
-		if (flag == true) return;
+		if (flag == true) {
+			alert("You chose to use the previous network data!");
+		} else {
+			alert("You chose to use the newly submitted data to start the node!");
+			deleteData(publicDataDirPath);
+		}
 
 		if (publicNetworkConsensus == "publicNetworkConsensusPOA") {
 
@@ -260,10 +265,10 @@ function findDir(publicDataDirPath) {
 			if (err) {
 				if (err.code === 'EEXIST') {
 					flag = true;
-					alert("Datadirectory folder already contains network data! That data will be used to start the network. For any changes, first delete the previous data!");
-					resolve(true);
+					var a = confirm("Datadirectory folder already contains network data! To continue using that data, press OK! To delete the previous data and start new network press CANCEL!");
+					resolve(a);
 				} else {
-					resolve(false);
+					resolve(a);
 				}
 			}
 		});
@@ -359,7 +364,7 @@ $('#joinPublicNetwork').on('click', async () => {
 		var joinPublicLocalHostPort = document.getElementById("joinPublicLocalHostPort").value;
 		var joinPublicRPCPortNumber = document.getElementById("joinPublicRPCPortNumber").value;
 		ipcPath = joinPublicDataDirPath + '/gaux.ipc'
-		
+
 		var flag;
 		flag = await findDir(joinPublicDataDirPath);
 		if (flag == true) return;
@@ -787,7 +792,7 @@ function dashboardPublicPOA() {
 
 }
 
-function dashboardOtherPublic() {
+function dashboardOtherPublicPOA() {
 
 	try {
 		folder = nodesDataDir + otherPublicDirNamePOA
@@ -873,6 +878,11 @@ function deletePath(nodeDetailsPath, networkDataPath) {
 			location.href = "./index.html";
 		});
 
+}
+
+function deleteData(networkDataPath) {
+	command = 'rm -rf ' + networkDataPath;
+	myShell.execute(command);
 }
 
 
@@ -991,8 +1001,10 @@ $(document).ready(function () {
 	// Dashboard View
 	dashboardAuxnetPublic()
 	dashboardPublic()
-	dashboardOtherPublic()
 	dashboardPublicPOA()
+	dashboardOtherPublic()
+	dashboardOtherPublicPOA()
+
 
 	// // TODO - To Be Removed
 	// $('#publicNetworkPOAParams').show("slow");
