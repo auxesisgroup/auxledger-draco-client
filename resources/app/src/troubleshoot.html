@@ -28,7 +28,7 @@
                 <li class="category">
                     Join
                 </li>
-                <li class="side_link active">
+                <li class="side_link">
                     <a href="./auxnet.html">
                         AUXNET
                     </a>
@@ -68,7 +68,7 @@
                 <div class="row">
                     <div class="col-12">
                         <p class="label_dark">
-                            Join Auxnet Public Network
+                            SET PATH:
                         </p>
                     </div>
 
@@ -76,46 +76,20 @@
                         
                             <div class="form-group cust_form_group" title="Path where you want to store the blockchain data">
                                 <label for="">
-                                    Data Directory Path
-                                    <span><img id="browseAuxnetDataDirPath" src="./assets/img/Folder_btn.svg" class="img-fluid" alt="" title="Click to select the folder"></span>                                    
+                                   Enter path of the folder where the aux_client application is present:
+                                    <span><img id="auxnetPath" src="./assets/img/Folder_btn.svg" class="img-fluid" alt="" title="Click to select the folder"></span>                                    
                                 </label>
-                                <input type="text" class="form-control" id="auxnetDataDirPath" placeholder="Enter path for Data directory">
+                                <input type="text" name="text_without_space" pattern="[^\s]*" title="Your path contains a space. Please ensure the path or folder name provided doesn not have any space or special characters." class="form-control" id="auxnetPathValue" placeholder="Enter path of the folder">
                             </div>
-                            <div class="form-group cust_form_group" title="Local machine port where node will run">
-                                <label for="">Local Port Number</label>
-                                <input type="text" class="form-control" id="auxnetPortNumber" placeholder="Local port number to host auxnet public Network">
-                            </div>
-                            <div class="form-group cust_form_group" title="RPC port number to interact with public Network">
-                                <label for="">RPC Port Number</label>
-                                <input type="text" class="form-control" id="auxnetRPCPortNumber" placeholder="RPC Port Number">
-                            </div>
-                            <button  class="btn cust_btn" id="joinAuxnetPublic" title="Click to start auxnet public node">Join AUXNET</button>
+                            
+                            <button  class="btn cust_btn" id="setAuxnetPath" title="Click to set the path">SET PATH</button>
                         
 
-                        <p class="auxnet_conneted relative" id="greendiv" style="display: none">
-                            AUXNET Connected <span><img src="./assets/img/check_green.svg" alt=""></span>
-                        </p>
+                        
                     </div>
                 </div>
 
-                <div class="row mt-5" >
-                    <div class="col-12">
-                        <p class="label_dark relative mb-1">
-                            Connect to Terminal <br>
-                            <small class="error" id="attachDiv" >You need to join AUXNET first</small>
-                        </p>
-                    </div>
-
-                    <div class="col-10">
-                        
-                            <div class="form-group cust_form_group disabled" disabled="disabled" title="path of gaux.ipc for corresponding network(present in data directory of the node)">
-                                <label for="">Gaux IPC Path</label>
-                                <input type="text" class="form-control" id="auxnetIpcPath"  placeholder="Enter path for Gaux IPC">
-                            </div>
-                            <button type="submit" id="attachAuxnetTerminal" class="btn cust_btn" disabled="disabled" title="Click to open workspace for the auxnet network">Open Workspace</button>
-                       
-                    </div>
-                </div>
+                
             </div>
         </section>
     </div>

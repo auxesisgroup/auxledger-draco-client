@@ -12,6 +12,86 @@ function selectFile() {
 	})	
 }
 
+function createPublicNetwork(){
+	alert(document.getElementById("auxnetDataDirPath").value)
+}
+
+function saveFile(filePath, data) {
+
+	try {
+		
+		directory = path.dirname(filePath)
+
+		if (!fs.existsSync(directory)){
+			var shell = require('shelljs');
+			shell.mkdir('-p', directory);
+		}
+
+		fs.writeFile(filePath, data, (err) => {
+		  if (err){
+		  	alert(err.message);
+		  	return false
+		  }	  
+
+		})
+		return true
+	}
+	catch(err) {
+    	alert(err.message);
+	}		
+}
+
+function saveNodeData(filePath, data) {
+
+	try {
+		
+		directory = path.dirname(filePath)
+
+		if (!fs.existsSync(directory)){
+			var shell = require('shelljs');
+			shell.mkdir('-p', directory);
+		}
+
+		var json = JSON.stringify(data, null, 4);
+		fs.writeFile(filePath, json, (err) => {
+		  if (err){
+		  	alert(err.message);
+		  	return false
+		  }	  
+
+		})
+		return true
+	}
+	catch(err) {
+    	alert(err.message);
+	}		
+}
+
+function readFileData(filePath) {
+	try {
+
+		fs.readFile(filePath, function (err, data) {
+		    if (err) alert(err);
+		    return data.toString();
+		});
+	}
+	catch(err) {
+    	alert(err.message);
+	}		
+}
+
+module.exports = {
+	selectDirectory,
+	selectFile,
+	createPublicNetwork,
+	saveFile,
+	saveNodeData,
+	readFileData
+	// getEnodeID
+}
+
+
+
 // function getEnodeID(){
 // 	return new Promise(async (resolve, reject) => {
 // 		try{
@@ -44,9 +124,4 @@ function selectFile() {
 // 		}
 // 	});
 // }
-
-module.exports = {
-	selectDirectory,
-	selectFile,
-	// getEnodeID
-}
+ 

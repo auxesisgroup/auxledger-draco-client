@@ -2,6 +2,7 @@ let $ = require('jquery');
 var fs = require('fs')
 var myShell = require('./my_shell');
 const path = require('path')
+const a = require('process')
 const {remote, dialog} = require('electron')
 const url = require('url');  
 const querystring = require('querystring');
@@ -103,17 +104,16 @@ $('#joinAuxnetPublic').on('click', () => {
 		
 		// -------------------------- Saving Data - Starts
 		ipcPath = auxnetDataDirPath + '/gaux.ipc'
-		file_path = nodesDataDir + auxnetDirName + auxnetDataFileName + '.json'
+		file_path = networkDataDir + auxnetDirName + auxnetDataFileName + '.json'
 		networkData = { 
 			'name' : auxnetNetworkName, 
 			'network' : auxnetNetworkName , 
 			'dataDir' : auxnetDataDirPath, 
 			'localPortNumber' :  auxnetPortNumber, 
 			'ipc' : ipcPath,
-			'rpcPort': auxnetRPCPortNumber,
-			'consensus' : 'POW'
+			'rpcPort': auxnetRPCPortNumber
 		}
-		util.saveNodeData(filePath, networkData)
+		saveData(file_path, networkData)
 		// --------------------------  Saving Data - Ends
 
 		// Starting Node
@@ -121,7 +121,7 @@ $('#joinAuxnetPublic').on('click', () => {
 		terminalCommandStart = "echo "+AUXNET+"/bin/gaux  "
 		command = terminalCommandStart  + ' --datadir=' + auxnetDataDirPath + ' --rpc --rpccorsdomain="*" --port=' + auxnetPortNumber + ' --rpcport=' + auxnetRPCPortNumber + terminalCommandEnd
 		myShell.execute(command);
-		
+		// alert(auxnetHomePath);
 		// Set IPC Path
 		$('#auxnetIpcPath').val(ipcPath);
 	}
@@ -136,7 +136,7 @@ $('#attachAuxnetTerminal').on('click', () => {
 	var auxnetIpcPath = document.getElementById("auxnetIpcPath").value;	
 	command = terminalCommandStart  + ' attach ipc:' + auxnetIpcPath + terminalCommandEnd
 	myShell.execute(command);
-});
+})
 
 $('#browseAuxnetDataDirPath').on('click', () => {
 	try{
@@ -153,12 +153,11 @@ $('#browseAuxnetDataDirPath').on('click', () => {
 	}
 	
 });
-
 // Auxnet Public - Ends
 
 // Public Network - Starts
 
-$('#startPublic').on('click',async () => {
+$('#startPublic').on('click', async () => {
 	try {
 		$('#startPublic').delay(1500).hide(0);
 		$('#greendiv').delay(1500).show(0);
@@ -166,127 +165,37 @@ $('#startPublic').on('click',async () => {
 		$('.cust_form_group, .cust_btn, .form_control').delay(1500).removeAttr("disabled");
 		$('.cust_form_group').delay(1500).removeClass("disabled");
 
-		var publicNetworkConsensus = document.getElementById("selectPublicNetworkConsensus").value
 		var publicNetworkName = document.getElementById("publicNetworkName").value;
 		var publicDataDirPath = document.getElementById("publicDataDirPath").value;
+		var publicGenesisFile = document.getElementById("publicGenesisFile").value;
 		var publicPortNumber = document.getElementById("publicPortNumber").value;
 		var publicRPCPortNumber = document.getElementById("publicRPCPortNumber").value;
-		var publicGasPrice = document.getElementById("publicGasPrice").value;
-		var ipcPath = publicDataDirPath + '/gaux.ipc'
-
-		genesisFilePath = publicDataDirPath + '/genesis.json'
-
-		if (publicNetworkConsensus == "publicNetworkConsensusPOA"){
-
-			var publicAccountPassword = document.getElementById("publicAccountPassword").value;
-			var publicNetworkPOAChainID = document.getElementById("publicNetworkPOAChainID").value;
-
-			// Generate Password File
-			passFilePath = publicDataDirPath + '/password.txt'
-			util.saveFile(passFilePath, publicAccountPassword)
-
-			// Generate Address, Return Type - address :{abcd}
-			AUXNET = process.env.AUXNETPATH
-			terminalCommandStart = AUXNET + "/bin/gaux  "	
-			generateAddressCommand = terminalCommandStart+ ' --datadir=' + publicDataDirPath + ' account new --password=' + passFilePath 
-			
-			var address = await myShell.execute(generateAddressCommand);
-			
-			address = address.split(':')[1]
-			address = address.trim()
-			address = address.slice(1, address.length-1)
-			var extraData = '0x0000000000000000000000000000000000000000000000000000000000000000'
-			extraData += address
-			extraData += '0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'
-
-			// Create Genesis File. TODO - Need to be improved
-			fs.readFile(publicGenesisFilePOA, 'utf8', function(err, contents) {
-				if (err) alert('Unable to Find/Read Genesis File')
-				else{
-					var obj = JSON.parse(contents);
-					obj['config']['chainId'] = parseInt(publicNetworkPOAChainID, 10);
-					obj['alloc'] = {
-						[address] : {
-							"balance" : "0x900000000000000000000000000000000000000000000000000000000000000"
-						}
-					}
-					obj['extraData'] = extraData
-					obj['gasPrice'] = publicGasPrice
-					util.saveNodeData(genesisFilePath, obj)
-				}			
-			})
-
-			// -------------------------- Saving Data - Starts
-			nodefilePath = nodesDataDir + publicDirNamePOA + publicNetworkName + '.json'	
-			networkData = { 
-				'name' : publicNetworkName, 
-				'network' : publicNetworkName , 
-				'dataDir' : publicDataDirPath, 
-				'localPortNumber' :  publicPortNumber, 
-				'genesisFile' :  genesisFilePath, 
-				'ipc' : ipcPath,
-				'rpcPort': publicRPCPortNumber,
-				'address' : address,
-				'password' : publicAccountPassword, 
-				'passwordFile' : passFilePath,
-				'chainId' : publicNetworkPOAChainID,
-				'consensus' : 'POA',
-				'gasPrice' : publicGasPrice
-			}
-			util.saveNodeData(nodefilePath, networkData)
-			// --------------------------  Saving Data - Ends
-
-			// Starting Node	
-			AUXNET = process.env.AUXNETPATH
-			terminalCommandStart = "echo "+AUXNET+"/bin/gaux  "		
-  			command = terminalCommandStart + ' init ' + genesisFilePath + ' --datadir=' + publicDataDirPath  +  terminalCommandEnd
-			command2 =  terminalCommandStart + ' --datadir=' + publicDataDirPath + ' --rpc --rpcaddr \'localhost\' --port=' + publicPortNumber + ' --rpcapi \'admin,debug,eth,ethash,miner,net,personal,rpc,txpool,web3,clique,db\' --rpcport=' + publicRPCPortNumber + ' --networkid=' +  publicNetworkPOAChainID + ' -unlock=\'0x' + address + '\' --password=' + passFilePath + terminalCommandEnd			
-			await myShell.execute(command);
-			alert("Genesis Block Created!");
-  			myShell.execute(command2);
-		}
-		else {
-
-			// Create Genesis File. TODO - Need to be improved
-			fs.readFile(publicGenesisFile, 'utf8', function(err, contents) {
-				if (err) alert('Unable to Find/Read Genesis File')
-				else{
-					var obj = JSON.parse(contents);
-					obj['gasPrice'] = publicGasPrice
-					util.saveNodeData(genesisFilePath, obj)
-				}			
-			})
-
-			// -------------------------- Saving Data - Starts
-			nodeFilePath = nodesDataDir + publicDirName + publicNetworkName + '.json'
-			networkData = { 
-				'name' : publicNetworkName, 
-				'network' : publicNetworkName , 
-				'dataDir' : publicDataDirPath, 
-				'localPortNumber' :  publicPortNumber, 
-				'genesisFile' :  genesisFilePath, 
-				'ipc' : ipcPath,
-				'rpcPort': publicRPCPortNumber,
-				'consensus' : 'POW',
-				'gasPrice' : publicGasPrice
-			}
-			util.saveNodeData(nodeFilePath, networkData)		
-			// --------------------------  Saving Data - Ends
-
-			// Starting Node
-			AUXNET = process.env.AUXNETPATH
-			terminalCommandStart = "echo "+AUXNET+"/bin/gaux  "		
-			command = terminalCommandStart + ' init ' + genesisFilePath + ' --datadir=' + publicDataDirPath  +  terminalCommandEnd
-			command2 =  terminalCommandStart + ' --datadir=' + publicDataDirPath + ' --rpc --rpccorsdomain="*" --port=' + publicPortNumber + ' --rpcport=' + publicRPCPortNumber + terminalCommandEnd
-			myShell.execute(command);
-			await myShell.execute(command);
-			alert("Genesis Block Created!");
-  			myShell.execute(command2);
-		}
-
-		// Set IPC Path
-		$('#publicIpcPath').val(ipcPath)
 		
+		// -------------------------- Saving Data - Starts
+		ipcPath = publicDataDirPath + '/gaux.ipc'
+		file_path = networkDataDir + publicDirName + publicNetworkName + '.json'
+		networkData = { 
+			'name' : publicNetworkName, 
+			'network' : publicNetworkName , 
+			'dataDir' : publicDataDirPath, 
+			'localPortNumber' :  publicPortNumber, 
+			'genesisFile' :  publicGenesisFile, 
+			'ipc' : ipcPath,
+			'rpcPort': publicRPCPortNumber
+		}
+		saveData(file_path, networkData)		
+		// --------------------------  Saving Data - Ends
+		 
+		// Starting Node
+		AUXNET = process.env.AUXNETPATH
+		terminalCommandStart = "echo "+AUXNET+"/bin/gaux  "
+		command = terminalCommandStart + ' init ' + publicGenesisFile + ' --datadir=' + publicDataDirPath  +  terminalCommandEnd
+		command2 =  terminalCommandStart + ' --datadir=' + publicDataDirPath + ' --rpc --rpccorsdomain="*" --port=' + publicPortNumber + ' --rpcport=' + publicRPCPortNumber + terminalCommandEnd
+		await myShell.execute(command);
+		alert("Genesis Block Created!");
+        myShell.execute(command2);
+		
+		$('#publicIpcPath').val(ipcPath);
 	}
 
 	catch(err) {
@@ -300,35 +209,6 @@ $('#attachPublicTerminal').on('click', () => {
 	command = terminalCommandStart + ' attach ipc:' + publicIpcPath + terminalCommandEnd
 	myShell.execute(command);
 })
-
-$('#selectPublicNetworkConsensus').change(function() {
-	consensus = $(this).val();
-
-	if (consensus == "publicNetworkConsensusPOA"){
-		$('#publicNetworkName').val(publicNetworkNamePOA)
-		$('#publicNetworkPOAParams').show("slow");		
-	}
-	else {
-		$('#publicNetworkName').val(publicNetworkName)		
-		$('#publicNetworkPOAParams').hide("slow");		
-	}
-
-});
-
-$('#selectJoinPublicNetworkConsensus').change(function() {
-	consensus = $(this).val();
-
-	if (consensus == "joinPublicNetworkConsensusPOA"){
-		$('#joinPublicNetworkName').val(joinPublicNetworkNamePOA)
-		$('#joinPublicNetworkPOAParams').show("slow");
-	}
-	else {
-		$('#joinPublicNetworkName').val(joinPublicNetworkName)		
-		$('#joinPublicNetworkPOAParams').hide("slow");		
-	}
-
-});
-
 
 $('#browsePublicDataDirPath').on('click', () => {
 	try{
@@ -347,123 +227,61 @@ $('#browsePublicDataDirPath').on('click', () => {
 });
 
 
-// $('#browsePublicGenesisFile').on('click', () => {
-// 	try{
-// 		genPath = util.selectFile()
-// 		// Set Path
-// 		if (genPath) $('#publicGenesisFile').val(genPath);
-// 	}
-// 	catch(err){
-// 		alert(err.message)
-// 	}
-	
-// });
-
-
-$('#joinPublicNetwork').on('click',async () => {
-
+$('#browsePublicGenesisFile').on('click', () => {
 	try{
-
-		$('#joinPublicNetwork').delay(1500).hide(0);
-		$('#greendiv').delay(1000).show(0);
-		$('#attachDiv').delay(1500).hide(0);
-		$('.cust_form_group, .cust_btn, .form_control').delay(1500).removeAttr("disabled");
-		$('.cust_form_group').delay(1500).removeClass("disabled");
-
-		var joinPublicNetworkConsensus = document.getElementById("selectJoinPublicNetworkConsensus").value
-		var joinPublicNetworkName = document.getElementById("joinPublicNetworkName").value;
-		var joinPublicGenesisFile = document.getElementById("joinPublicGenesisFile").value;
-		var joinPublicDataDirPath = document.getElementById("joinPublicDataDirPath").value;
-		var joinPublicBootNode = document.getElementById("joinPublicBootNode").value;
-		var joinPublicLocalHostPort = document.getElementById("joinPublicLocalHostPort").value;
-		var joinPublicRPCPortNumber = document.getElementById("joinPublicRPCPortNumber").value;
-		ipcPath = joinPublicDataDirPath + '/gaux.ipc'
-
- 		if (joinPublicNetworkConsensus == "joinPublicNetworkConsensusPOA"){
-
-			nodefilePath = nodesDataDir + otherPublicDirNamePOA + joinPublicNetworkNamePOA + '.json'
-			var joinPublicAccountPassword = document.getElementById("joinPublicAccountPassword").value;
-
-			// Generate Password File
-			passFilePath = joinPublicDataDirPath + '/password.txt'
-			util.saveFile(passFilePath, joinPublicAccountPassword)
-
-			// Generate Address, Return Type - address :{abcd}
-			generateAddressCommand = terminalCommandStart + ' --datadir=' + joinPublicDataDirPath + ' account new --password=' + passFilePath
-			var address = await myShell.execute(generateAddressCommand)
-			address = address.split(':')[1]
-			address = address.trim()
-			address = address.slice(1, address.length-1)
-
-			// TODO - Get Chain ID from Genesis
-			publicNetworkPOAChainID = 1515
-
-			// -------------------------- Saving Data - Starts
-			networkData = { 
-				'name' : joinPublicNetworkName, 
-				'network' : joinPublicNetworkName , 
-				'dataDir' : joinPublicDataDirPath, 
-				'localPortNumber' :  joinPublicLocalHostPort, 
-				'genesisFile' :  joinPublicGenesisFile, 
-				'ipc' : ipcPath,
-				'bootNode' : joinPublicBootNode,
-				'rpcPort': joinPublicRPCPortNumber,
-				'address' : address,
-				'password' : joinPublicAccountPassword, 
-				'passwordFile' : passFilePath,
-				'chainId' : publicNetworkPOAChainID,
-				'consensus' : 'POA'
-			}
-			util.saveNodeData(nodefilePath, networkData)
-			// --------------------------  Saving Data - Ends
-				 // Starting Node
-				 AUXNET = process.env.AUXNETPATH
-				terminalCommandStart = "echo "+AUXNET+"/bin/gaux  "
-			command = terminalCommandStart  + ' --datadir=' + joinPublicDataDirPath + ' init ' + joinPublicGenesisFile + terminalCommandEnd
-			command2 =  terminalCommandStart + ' --datadir=' + joinPublicDataDirPath + ' --rpc --rpccorsdomain="*" --port=' + joinPublicLocalHostPort + ' --rpcport=' + joinPublicRPCPortNumber + ' --bootnodes=' + joinPublicBootNode + terminalCommandEnd
-			await myShell.execute(command);
-			alert("Genesis Block Created!");
-			myShell.execute(command2);
-}
-		else{
-
-			// -------------------------- Saving Data - Starts	
-			filePath = nodesDataDir + otherPublicDirName + joinPublicNetworkName + '.json'
-			networkData = { 
-				'name' : joinPublicNetworkName, 
-				'network' : joinPublicNetworkName , 
-				'dataDir' : joinPublicDataDirPath, 
-				'localPortNumber' :  joinPublicLocalHostPort, 
-				'genesisFile' :  joinPublicGenesisFile, 
-				'ipc' : ipcPath,
-				'bootNode' : joinPublicBootNode,
-				'rpcPort': joinPublicRPCPortNumber,
-				'consensus' : 'POW'
-
-			}
-			util.saveNodeData(filePath, networkData)		
-			// --------------------------  Saving Data - Ends
-
-			// Starting Node
-			AUXNET = process.env.AUXNETPATH
-			terminalCommandStart = "echo "+AUXNET+"/bin/gaux  "
-			command = terminalCommandStart  + ' --datadir=' + joinPublicDataDirPath + ' init ' + joinPublicGenesisFile + terminalCommandEnd
-			command2 =  terminalCommandStart + ' --datadir=' + joinPublicDataDirPath + ' --rpc --rpccorsdomain="*" --port=' + joinPublicLocalHostPort + ' --rpcport=' + joinPublicRPCPortNumber + ' --bootnodes=' + joinPublicBootNode + terminalCommandEnd
-			await myShell.execute(command);
-			alert("Genesis Block Created!");
-			myShell.execute(command2);
-		}
-
-		// Set IPC Path
-		$('#joinPublicIpcPath').val(ipcPath);
-
+		genPath = util.selectFile()
+		// Set Path
+		if (genPath) $('#publicGenesisFile').val(genPath);
 	}
-
 	catch(err){
 		alert(err.message)
 	}
-
 	
+});
+
+
+$('#joinPublicNetwork').on('click', async () => {
+	$('#joinPublicNetwork').delay(1500).hide(0);
+	$('#greendiv').delay(1000).show(0);
+	$('#attachDiv').delay(1500).hide(0);
+	$('.cust_form_group, .cust_btn, .form_control').delay(1500).removeAttr("disabled");
+	$('.cust_form_group').delay(1500).removeClass("disabled");
+
+	var joinPublicNetworkName = document.getElementById("joinPublicNetworkName").value;
+	var joinPublicGenesisFile = document.getElementById("joinPublicGenesisFile").value;
+	var joinPublicDataDirPath = document.getElementById("joinPublicDataDirPath").value;
+	var joinPublicBootNode = document.getElementById("joinPublicBootNode").value;
+	var joinPublicLocalHostPort = document.getElementById("joinPublicLocalHostPort").value;
+	var joinPublicRPCPortNumber = document.getElementById("joinPublicRPCPortNumber").value;	
+
+	// -------------------------- Saving Data - Starts
+	ipcPath = joinPublicDataDirPath + '/gaux.ipc'
+	file_path = networkDataDir + otherPublicDirName + joinPublicNetworkName + '.json'
+	networkData = { 
+		'name' : joinPublicNetworkName, 
+		'network' : joinPublicNetworkName , 
+		'dataDir' : joinPublicDataDirPath, 
+		'localPortNumber' :  joinPublicLocalHostPort, 
+		'genesisFile' :  joinPublicGenesisFile, 
+		'ipc' : ipcPath,
+		'bootNode' : joinPublicBootNode,
+		'rpcPort': joinPublicRPCPortNumber
+	}
+	saveData(file_path, networkData)		
+	// --------------------------  Saving Data - Ends
+
+	// Starting Node
+	AUXNET = process.env.AUXNETPATH
+		terminalCommandStart = "echo "+AUXNET+"/bin/gaux  "
+	command = terminalCommandStart  + ' --datadir=' + joinPublicDataDirPath + ' init ' + joinPublicGenesisFile + terminalCommandEnd
+	command2 =  terminalCommandStart + ' --datadir=' + joinPublicDataDirPath + ' --rpc --rpccorsdomain="*" --port=' + joinPublicLocalHostPort + ' --rpcport=' + joinPublicRPCPortNumber + ' --bootnodes=' + joinPublicBootNode + terminalCommandEnd
+	await myShell.execute(command);
+	alert("Genesis Block Created!");
+	myShell.execute(command2);
+
+
+	// Set IPC Path
+	$('#publicIpcPath').val(ipcPath);
 })
 
 
@@ -501,19 +319,6 @@ $('#browseJoinPublicGenesisFile').on('click', () => {
 	
 });
 
-$('#testRPC').on('click', async () => {
-
-	try {
-		ret = await util.getEnodeID()
-		alert(ret)
-	}
-
-	catch(err){
-		alert(err.message)
-	}
-	
-	
-})
 // Public Network - Ends
 
 
@@ -984,7 +789,6 @@ $( document ).ready(function() {
 	// // TODO - To Be Removed	
 
 });
-
 
 // Common - Ends
 
